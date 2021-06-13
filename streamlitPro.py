@@ -385,6 +385,9 @@ try:
             table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
             footer()
         else:
+            taWrite()
+            fig, config = ta(tickerSymbol)
+            st.plotly_chart(fig, config=config)
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
             string_name, string_summary, fig, config = chart(tickerData, range)
@@ -486,6 +489,8 @@ try:
 
 except:
     pass
+
+
 
 
 
