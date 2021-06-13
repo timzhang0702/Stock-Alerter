@@ -345,6 +345,10 @@ try:
             ---
             """
         )
+        
+        taWrite()
+        fig, config = ta('AAPL')
+        st.plotly_chart(fig, config=config)
 
         with st.form(key='my_form'):
             st.header("Want to be notified of new features?")
