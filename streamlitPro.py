@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import re
+import nltk
 import smtplib
 import requests
 import tweepy
@@ -265,6 +266,7 @@ def twitter(stock):
         for tweet in response.json()['data']:
             row = get_data(tweet)  # we defined this function earlier
             df = df.append(row, ignore_index=True)
+    nltk.download('vader_lexicon')
     vader = SentimentIntensityAnalyzer()
     scores = df['text'].apply(vader.polarity_scores).tolist()
     # Convert the 'scores' list of dicts into a DataFrame
