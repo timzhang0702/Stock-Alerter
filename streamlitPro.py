@@ -258,7 +258,7 @@ def twitter(stock):
         response = requests.get(endpoint,
                                 params=params,
                                 headers=headers)  # send the request
-        now = pre60  # move the window 60 minutes earlier
+        now = time_travel(pre60, 10) # move the window 60 minutes earlier
         # iteratively append our tweet data to our dataframe
         print(response.json())
         for tweet in response.json()['data']:
