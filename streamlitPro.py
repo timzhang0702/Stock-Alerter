@@ -219,7 +219,7 @@ def table(rows, companyName, sector, volume, rows2, companyName2, sector2, volum
     fig.update_layout(height=(len(companyName2)) * 21 + 25, margin=dict(l=1, r=1, b=0, t=0))
     st.write(fig)
 
-@st.cache(suppress_st_warning=True)
+@st.cache()
 def twitter(stock):
     endpoint = 'https://api.twitter.com/2/tweets/search/recent'
     headers = {'authorization': f'Bearer {BEARER_TOKEN}'}
