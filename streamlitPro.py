@@ -244,7 +244,7 @@ def twitter(stock):
         return data
 
     now = datetime.now() - timedelta(minutes = 100)# get the current datetime, this is our starting point
-    last_week = now - timedelta(days=1)  # datetime one week ago = the finish line
+    last_week = now - timedelta(days=5)  # datetime one week ago = the finish line
     now = now.strftime(dtformat)  # convert now datetime to format for API
     df = pd.DataFrame()  # initialize dataframe to store tweets
     while True:
