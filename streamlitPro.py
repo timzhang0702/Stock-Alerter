@@ -247,41 +247,43 @@ def twitter(stock):
     last_week = now - timedelta(days=5)  # datetime one week ago = the finish line
     now = now.strftime(dtformat)  # convert now datetime to format for API
     df = pd.DataFrame()  # initialize dataframe to store tweets
-    while True:
-        if datetime.strptime(now, dtformat) < last_week:
-            # if we have reached 7 days ago, break the loop
-            break
-        pre60 = time_travel(now, 1440)  # get 60 minutes before 'now'
-        # assign from and to datetime parameters for the API
-        params['start_time'] = pre60
-        params['end_time'] = now
-        response = requests.get(endpoint,
-                                params=params,
-                                headers=headers)  # send the request
-        now = pre60 # move the window 60 minutes earlier
-        # iteratively append our tweet data to our dataframe
-        print(response.json())
-        for tweet in response.json()['data']:
-            row = get_data(tweet)  # we defined this function earlier
-            df = df.append(row, ignore_index=True)
-    print("out")
-    vader = SentimentIntensityAnalyzer()
-    scores = df['text'].apply(vader.polarity_scores).tolist()
-    # Convert the 'scores' list of dicts into a DataFrame
-    scores_df = pd.DataFrame(scores)
-    scores_df['pos'] = 100 * scores_df['pos']
-    scores_df['neg'] = 100 * scores_df['neg']
-    # Join the DataFrames of the news and the list of dicts
-    scores_df = scores_df.rename(columns={'pos': 'Positive Sentiment', 'neg': 'Negative Sentiment'})
-    df = df.join(scores_df[['Positive Sentiment','Negative Sentiment']])
-    # Convert the date column from string to datetime
-    df['created_at'] = pd.to_datetime(df['created_at']).dt.date
-    plt.rcParams['figure.figsize'] = [10, 6]
-    # Group by date and ticker columns from scored_news and calculate the mean
-    mean_scores = df.groupby('created_at').mean()
-    # Unstack the column ticker
-    # mean_scores = mean_scores.unstack()
-    return mean_scores
+    try:
+            while True:
+                if datetime.strptime(now, dtformat) < last_week:
+                    # if we have reached 7 days ago, break the loop
+                    break
+                pre60 = time_travel(now, 1440)  # get 60 minutes before 'now'
+                # assign from and to datetime parameters for the API
+                params['start_time'] = pre60
+                params['end_time'] = now
+                response = requests.get(endpoint,
+                                        params=params,
+                                        headers=headers)  # send the request
+                now = pre60 # move the window 60 minutes earlier
+                # iteratively append our tweet data to our dataframe
+                print(response.json())
+                for tweet in response.json()['data']:
+                    row = get_data(tweet)  # we defined this function earlier
+                    df = df.append(row, ignore_index=True)
+    except:
+            print("out")
+            vader = SentimentIntensityAnalyzer()
+            scores = df['text'].apply(vader.polarity_scores).tolist()
+            # Convert the 'scores' list of dicts into a DataFrame
+            scores_df = pd.DataFrame(scores)
+            scores_df['pos'] = 100 * scores_df['pos']
+            scores_df['neg'] = 100 * scores_df['neg']
+            # Join the DataFrames of the news and the list of dicts
+            scores_df = scores_df.rename(columns={'pos': 'Positive Sentiment', 'neg': 'Negative Sentiment'})
+            df = df.join(scores_df[['Positive Sentiment','Negative Sentiment']])
+            # Convert the date column from string to datetime
+            df['created_at'] = pd.to_datetime(df['created_at']).dt.date
+            plt.rcParams['figure.figsize'] = [10, 6]
+            # Group by date and ticker columns from scored_news and calculate the mean
+            mean_scores = df.groupby('created_at').mean()
+            # Unstack the column ticker
+            # mean_scores = mean_scores.unstack()
+            return mean_scores
 
 def ta(stock):
     layout = dict(
