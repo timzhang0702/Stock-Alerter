@@ -264,6 +264,7 @@ def twitter(stock):
         for tweet in response.json()['data']:
             row = get_data(tweet)  # we defined this function earlier
             df = df.append(row, ignore_index=True)
+    print("out")
     vader = SentimentIntensityAnalyzer()
     scores = df['text'].apply(vader.polarity_scores).tolist()
     # Convert the 'scores' list of dicts into a DataFrame
