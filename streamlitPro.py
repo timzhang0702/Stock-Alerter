@@ -283,7 +283,6 @@ def twitter(stock):
     # mean_scores = mean_scores.unstack()
     return mean_scores
 
-@st.cache()
 def ta(stock):
     layout = dict(
         xaxis=dict(rangeslider=dict(visible=False), categoryorder="category ascending", type="category",
