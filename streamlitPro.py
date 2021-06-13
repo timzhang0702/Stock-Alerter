@@ -219,6 +219,7 @@ def table(rows, companyName, sector, volume, rows2, companyName2, sector2, volum
     fig.update_layout(height=(len(companyName2)) * 21 + 25, margin=dict(l=1, r=1, b=0, t=0))
     st.write(fig)
 
+@st.cache()
 def twitter(stock):
     endpoint = 'https://api.twitter.com/2/tweets/search/recent'
     headers = {'authorization': f'Bearer {BEARER_TOKEN}'}
@@ -254,7 +255,7 @@ def twitter(stock):
         pre60 = time_travel(now, 1440)  # get 60 minutes before 'now'
         # assign from and to datetime parameters for the API
         params['start_time'] = pre60
-        params['end_time'] = now
+        params['end_time'] = now    
         response = requests.get(endpoint,
                                 params=params,
                                 headers=headers)  # send the request
@@ -264,7 +265,6 @@ def twitter(stock):
         for tweet in response.json()['data']:
             row = get_data(tweet)  # we defined this function earlier
             df = df.append(row, ignore_index=True)
-    print("out")
     vader = SentimentIntensityAnalyzer()
     scores = df['text'].apply(vader.polarity_scores).tolist()
     # Convert the 'scores' list of dicts into a DataFrame
@@ -313,10 +313,11 @@ def sendmail(mes):
     server.login(sender_email, password)
     server.sendmail(sender_email, rec_email, mes)
 
+
 hide_decoration_bar_style = '''
-<style>
-    header {visibility: hidden;}
-</style>
+    <style>
+        header {visibility: hidden;}
+    </style>
 '''
 st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
 
@@ -327,160 +328,162 @@ st.sidebar.write('####')
 option = st.sidebar.selectbox('Screener', ('Home','Increased Volume', 'Uptrend Pullback', 'Bollinger Bands Squeeze'), 0)
 
 if option == 'Home':
-st.markdown("<h1 style='text-align: center; color: black; font-weight:100;'><b>About</b></h1 >",
-            unsafe_allow_html=True)
-st.markdown(
-    """
-    ---
-    This program provides a set of powerful tools & analytics to help with your stock market research.
-    If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com)
-    ### What's Provided?
-    - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze)
-    - Interactive stock charts
-    - Twitter sentiment for individual stocks
+    st.markdown("<h1 style='text-align: center; color: black; font-weight:100;'><b>About</b></h1 >",
+                unsafe_allow_html=True)
+    st.markdown(
+        """
+        ---
+        This program provides a set of powerful tools & analytics to help with your stock market research.
+        If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com)
+        ### What's Provided?
+        - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze)
+        - Interactive stock charts
+        - Twitter sentiment for individual stocks
+        
+        #### Check out the sidebar filters to learn more!  
+        ---
+        """
+    )
 
-    #### Check out the sidebar filters to learn more!  
-    ---
-    """
-)
+    with st.form(key='my_form'):
+        st.header("Want to be notified of new features?")
+        col1, col2 = st.beta_columns([5,1])
+        regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 
-with st.form(key='my_form'):
-    st.header("Want to be notified of new features?")
-    col1, col2 = st.beta_columns([5,1])
-    regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+        with col1:
+            text_input = st.text_input('Subscribe today to get the latest news and updates.', 'Email Address')
+        with col2:
+            st.header('')
+            submit_button = st.form_submit_button(label="Subscribe")
+        if submit_button and re.search(regex, text_input):
+            st.info("You've been subscribed successfully!")
+            st.balloons()
+            sendmail(text_input)
 
-    with col1:
-        text_input = st.text_input('Subscribe today to get the latest news and updates.', 'Email Address')
-    with col2:
-        st.header('')
-        submit_button = st.form_submit_button(label="Subscribe")
-    if submit_button and re.search(regex, text_input):
-        st.info("You've been subscribed successfully!")
-        st.balloons()
-        sendmail(text_input)
+        elif submit_button:
+            st.error("Invalid Email")
 
-    elif submit_button:
-        st.error("Invalid Email")
-
-footer()
+    footer()
 
 if option == 'Increased Volume':
-increased_volume()
+    increased_volume()
 
-rows = [row[0] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-rows.insert(0, 'Summary of Stocks')
-sector = [row[1] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-companyName = [row[2] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-volume = [row[3] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-rows2 = [row[0] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
-sector2 = [row[1] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
-companyName2 = [row[2] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
-volume2 = [row[3] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
+    rows = [row[0] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
+    rows.insert(0, 'Summary of Stocks')
+    sector = [row[1] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
+    companyName = [row[2] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
+    volume = [row[3] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
+    rows2 = [row[0] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
+    sector2 = [row[1] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
+    companyName2 = [row[2] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
+    volume2 = [row[3] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
 
-tickerSymbol = st.sidebar.selectbox('Stock Ticker', rows + rows2)  # Select ticker symbol
-tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
-if tickerSymbol == 'Summary of Stocks':
-    table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
-    footer()
-else:
-    range = st.sidebar.selectbox("Date Range", (
-        '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-    string_name, string_summary, fig, config = chart(tickerData, range)
-    st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >", unsafe_allow_html=True)
-    st.write("---")
-    st.info(string_summary)
-    st.write("---")
-    st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >", unsafe_allow_html=True)
-    st.write("---")
-    st.plotly_chart(fig, config=config)
-
-    agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-
-    if agree:
-        taWrite()
-        fig, config = ta(tickerSymbol)
+    tickerSymbol = st.sidebar.selectbox('Stock Ticker', rows + rows2)  # Select ticker symbol
+    tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
+    if tickerSymbol == 'Summary of Stocks':
+        table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
+        footer()
+    else:
+        range = st.sidebar.selectbox("Date Range", (
+            '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+        string_name, string_summary, fig, config = chart(tickerData, range)
+        st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >", unsafe_allow_html=True)
+        st.write("---")
+        st.info(string_summary)
+        st.write("---")
+        st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >", unsafe_allow_html=True)
+        st.write("---")
         st.plotly_chart(fig, config=config)
-    footer()
+
+        agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+
+        if agree:
+            taWrite()
+            fig, config = ta(tickerSymbol)
+            st.plotly_chart(fig, config=config)
+        footer()
 
 if option == 'Uptrend Pullback':
-uptrend_pullback()
+    uptrend_pullback()
 
-rows = [row[0] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-rows.insert(0, 'Summary of Stocks')
-sector = [row[1] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-companyName = [row[2] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-volume = [row[3] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-rows2 = [row[0] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
-sector2 = [row[1] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
-companyName2 = [row[2] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
-volume2 = [row[3] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
+    rows = [row[0] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
+    rows.insert(0, 'Summary of Stocks')
+    sector = [row[1] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
+    companyName = [row[2] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
+    volume = [row[3] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
+    rows2 = [row[0] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
+    sector2 = [row[1] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
+    companyName2 = [row[2] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
+    volume2 = [row[3] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
 
-tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
-tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
+    tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
+    tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
 
-if tickerSymbol == 'Summary of Stocks':
-    table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
-    footer()
-else:
-    range = st.sidebar.selectbox("Date Range", (
-        '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-    string_name, string_summary, fig, config = chart(tickerData, range)
-    st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
-                unsafe_allow_html=True)
-    st.write("---")
-    st.info(string_summary)
-    st.write("---")
-    st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
-                unsafe_allow_html=True)
-    st.write("---")
-    st.plotly_chart(fig, config=config)
-
-    agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-    if agree:
-        taWrite()
-        fig, config = ta(tickerSymbol)
+    if tickerSymbol == 'Summary of Stocks':
+        table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
+        footer()
+    else:
+        range = st.sidebar.selectbox("Date Range", (
+            '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+        string_name, string_summary, fig, config = chart(tickerData, range)
+        st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                    unsafe_allow_html=True)
+        st.write("---")
+        st.info(string_summary)
+        st.write("---")
+        st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                    unsafe_allow_html=True)
+        st.write("---")
         st.plotly_chart(fig, config=config)
-    footer()
+
+        agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+        if agree:
+            taWrite()
+            fig, config = ta(tickerSymbol)
+            st.plotly_chart(fig, config=config)
+        footer()
 
 if option == 'Bollinger Bands Squeeze':
-bbs()
+    bbs()
 
-rows = [row[0] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-rows.insert(0, 'Summary of Stocks')
-sector = [row[1] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-companyName = [row[2] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-volume = [row[3] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-rows2 = [row[0] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
-sector2 = [row[1] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
-companyName2 = [row[2] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
-volume2 = [row[3] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
+    rows = [row[0] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
+    rows.insert(0, 'Summary of Stocks')
+    sector = [row[1] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
+    companyName = [row[2] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
+    volume = [row[3] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
+    rows2 = [row[0] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
+    sector2 = [row[1] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
+    companyName2 = [row[2] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
+    volume2 = [row[3] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
 
-tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
-tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
+    tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
+    tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
 
-if tickerSymbol == 'Summary of Stocks':
-    table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
-    footer()
-else:
-    range = st.sidebar.selectbox("Date Range", (
-        '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-    string_name, string_summary, fig, config = chart(tickerData, range)
-    st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
-                unsafe_allow_html=True)
-    st.write("---")
-    st.info(string_summary)
-    st.write("---")
-    st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
-                unsafe_allow_html=True)
-    st.write("---")
-    st.plotly_chart(fig, config=config)
-
-    agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-    if agree:
-        taWrite()
-        fig, config = ta(tickerSymbol)
+    if tickerSymbol == 'Summary of Stocks':
+        table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
+        footer()
+    else:
+        range = st.sidebar.selectbox("Date Range", (
+            '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+        string_name, string_summary, fig, config = chart(tickerData, range)
+        st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                    unsafe_allow_html=True)
+        st.write("---")
+        st.info(string_summary)
+        st.write("---")
+        st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                    unsafe_allow_html=True)
+        st.write("---")
         st.plotly_chart(fig, config=config)
-    footer()
+
+        agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+        if agree:
+            taWrite()
+            fig, config = ta(tickerSymbol)
+            st.plotly_chart(fig, config=config)
+        footer()
+
+
 
 
 
