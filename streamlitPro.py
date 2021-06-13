@@ -398,7 +398,6 @@ try:
             agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
 
             if agree:
-                st.write(twitter(tickerSymbol))
                 taWrite()
                 fig, config = ta(tickerSymbol)
                 st.plotly_chart(fig, config=config)
