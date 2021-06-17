@@ -15,6 +15,7 @@ import yfinance as yf
 from htbuilder import HtmlElement, div, hr, a, p, styles
 from htbuilder.units import percent, px
 from rw_sheet import read_sheets
+import SessionState
 
 TWITTER_CONSUMER_KEY = 'BvbkjWzqKUKiUJuqpuf5DhZn5'
 TWITTER_CONSUMER_SECRET = 'N2RVYi0LReDZA2tBPykVDUKBF0CuTuKHx9qtQorYL9TNV6nqq9'
@@ -116,11 +117,14 @@ def footer():
     layout(*myargs)
 
 @st.cache(suppress_st_warning=True)
-def chart(tickerData, range):
+def chart(tickerData, range, tickerSymbol):
     tickerDf = tickerData.history(interval=intervalDict[range],
                        period=periodDict[range])
 
-    string_name = tickerData.info['longName']
+    try:
+        string_name = tickerData.info['longName']
+    except:
+        string_name = tickerSymbol
     try:
         string_summary = tickerData.info['longBusinessSummary']
     except:
@@ -192,6 +196,10 @@ def bbs():
         #### For individual stock analytics, please select a stock ticker on the sidebar
         """
     )
+    st.write('---')
+
+def search():
+    st.markdown("<h1 style='text-align: center; color: black;'>Search</h1>", unsafe_allow_html=True)
     st.write('---')
 
 def table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2):
@@ -292,7 +300,7 @@ def ta(stock):
     config = {'displaylogo': False,
               "modeBarButtonsToRemove": ['pan2d', 'zoom2d', 'select2d', 'lasso2d', 'toggleSpikelines',
                                          'autoScale2d']}
-    fig = twitter(stock).iplot(kind="bar", barmode="stack", asFigure=True, opacity=1.0,
+    fig = twitter(stock.split('.')[0]).iplot(kind="bar", barmode="stack", asFigure=True, opacity=1.0,
                                       colors=['limegreen', 'orangered'])
     fig.update_layout(height=500, title_text=string_name, title_x=0.5, showlegend=True,
                       legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="center", x=0.5))
@@ -315,21 +323,21 @@ def sendmail(mes):
     server.login(sender_email, password)
     server.sendmail(sender_email, rec_email, mes)
 
-try:
-    hide_decoration_bar_style = '''
-        <style>
-            header {visibility: hidden;}
-        </style>
-    '''
-    st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
 
+hide_decoration_bar_style = '''
+    <style>
+        header {visibility: hidden;}
+    </style>
+'''
+st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
 
-    st.sidebar.write('#')
-    st.sidebar.header('Filters')
-    st.sidebar.write('####')
-    option = st.sidebar.selectbox('Screener', ('Home','Increased Volume', 'Uptrend Pullback', 'Bollinger Bands Squeeze'), 0)
+st.sidebar.write('#')
+st.sidebar.header('Filters')
+st.sidebar.write('####')
+option = st.sidebar.selectbox('Screener', ('Home','Increased Volume', 'Uptrend Pullback', 'Bollinger Bands Squeeze', 'Search'), 0)
 
-    if option == 'Home':
+if option == 'Home':
+    try:
         st.markdown("<h1 style='text-align: center; color: black; font-weight:100;'><b>About</b></h1 >",
                     unsafe_allow_html=True)
         st.markdown(
@@ -366,8 +374,11 @@ try:
                 st.error("Invalid Email")
 
         footer()
+    except:
+        st.info('Unexpected Error')
 
-    if option == 'Increased Volume':
+if option == 'Increased Volume':
+    try:
         increased_volume()
 
         rows = [row[0] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
@@ -388,24 +399,31 @@ try:
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-            string_name, string_summary, fig, config = chart(tickerData, range)
-            st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >", unsafe_allow_html=True)
-            st.write("---")
-            st.info(string_summary)
-            st.write("---")
-            st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >", unsafe_allow_html=True)
-            st.write("---")
-            st.plotly_chart(fig, config=config)
-
-            agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-
-            if agree:
-                taWrite()
-                fig, config = ta(tickerSymbol)
+            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            if string_name != tickerSymbol:
+                st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >", unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >", unsafe_allow_html=True)
+                st.write("---")
                 st.plotly_chart(fig, config=config)
-            footer()
 
-    if option == 'Uptrend Pullback':
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
+                footer()
+            else:
+                st.info('Ticker Symbol Not Found')
+                footer()
+    except:
+        st.info('Unexpected Error')
+
+if option == 'Uptrend Pullback':
+    try:
         uptrend_pullback()
 
         rows = [row[0] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
@@ -427,25 +445,33 @@ try:
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-            string_name, string_summary, fig, config = chart(tickerData, range)
-            st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
-                        unsafe_allow_html=True)
-            st.write("---")
-            st.info(string_summary)
-            st.write("---")
-            st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
-                        unsafe_allow_html=True)
-            st.write("---")
-            st.plotly_chart(fig, config=config)
-
-            agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-            if agree:
-                taWrite()
-                fig, config = ta(tickerSymbol)
+            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            if string_name != tickerSymbol:
+                st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
                 st.plotly_chart(fig, config=config)
-            footer()
 
-    if option == 'Bollinger Bands Squeeze':
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
+                footer()
+            else:
+                st.info('Ticker Symbol Not Found')
+                footer()
+
+    except:
+        st.info('Unexpected Error')
+
+if option == 'Bollinger Bands Squeeze':
+    try:
         bbs()
 
         rows = [row[0] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
@@ -467,25 +493,76 @@ try:
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-            string_name, string_summary, fig, config = chart(tickerData, range)
-            st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
-                        unsafe_allow_html=True)
-            st.write("---")
-            st.info(string_summary)
-            st.write("---")
-            st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
-                        unsafe_allow_html=True)
-            st.write("---")
-            st.plotly_chart(fig, config=config)
-
-            agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-            if agree:
-                taWrite()
-                fig, config = ta(tickerSymbol)
+            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            if string_name != tickerSymbol:
+                st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
                 st.plotly_chart(fig, config=config)
-            footer()
-except:
-    pass
+
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
+                footer()
+            else:
+                st.info('Ticker Symbol Not Found')
+                footer()
+    except:
+        st.info('Unexpected Error')
+
+if option == 'Search':
+    try:
+        search()
+        session_state = SessionState.get(checkboxed=False)
+        with st.form(key='my_form'):
+            col1, col2 = st.beta_columns([6.3, 1])
+            with col1:
+                tickerSymbol = st.text_input('Enter A Stock Ticker', 'aapl')
+            with col2:
+                st.header('')
+                submit_button = st.form_submit_button(label="Search")
+
+        if submit_button or session_state.checkboxed:
+            session_state.checkboxed = True
+
+            tickerData = yf.Ticker(tickerSymbol)
+            range = st.sidebar.selectbox("Date Range", (
+                '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            if string_name != tickerSymbol:
+                st.markdown(
+                    "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                    unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
+                st.plotly_chart(fig, config=config)
+
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
+                footer()
+            else:
+                st.info('Ticker Symbol Not Found')
+                footer()
+    except:
+        st.info('Unexpected Error')
+
+
+
 
 
 
