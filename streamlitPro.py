@@ -149,10 +149,10 @@ def increased_volume():
         ---
         Looking at volume over time can help get a sense of the strength or conviction behind advances and declines in specific stocks.
         An sharp increase in volume can indicate new interest in a stock and can signal an uptrend. 
-        By understanding this, stock with a sharp increase in volume that has not seen an as dramastic increase in stock price can present a profitable trading opportunity.
+        By understanding this, stocks with a sharp increase in volume that has not seen an as dramastic increase in price can present a profitable trading opportunity.
         ### Stock Selection Criteria:
         - Current volume is greater than 2-times the 90-day average
-        - Current price has increased less than 15% than the previous day
+        - Current price has increased less than 15% from the previous day
         - Current volume is greater than 1 million
         
         #### For individual stock analytics, please select a stock ticker on the sidebar
@@ -170,7 +170,7 @@ def uptrend_pullback():
         By using the RSI indicator, a stock can be analyzed to be oversold or overbought. 
         This can help scan for profitable trading opportunities by recognizing that stock prices usually rebound. 
         ### Stock Selection Criteria:
-        - Current RSI is les than 30 
+        - Current RSI is less than 30 
         - Current price is great than the 200 day moving average
         - Current volume is greater than 500,000
         
@@ -184,7 +184,7 @@ def bbs():
     st.markdown(
         """
         ---
-        The Bollinger Band Squeeze occurs when volatility falls to low levels and the Bollinger Bands narrow. 
+        A Bollinger Band Squeeze occurs when volatility falls to low levels and the Bollinger Bands narrow. 
         According to John Bollinger, developer of Bollinger Bands, periods of low volatility are often followed by periods of high volatility. 
         Therefore, a volatility contraction or narrowing of the bands can foreshadow a significant advance or decline.
         Usually, an uptrend is signaled once a stock's price breaks above the upper band.
@@ -344,7 +344,7 @@ if option == 'Home':
             """
             ---
             This program provides a set of powerful tools & analytics to help with your stock market research.
-            If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com)
+            If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com).
             ### What's Provided?
             - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze)
             - Interactive stock charts
