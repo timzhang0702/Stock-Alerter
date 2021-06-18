@@ -343,7 +343,7 @@ if option == 'Home':
         st.markdown(
             """
             ---
-            This program provides a set of powerful tools & analytics to help with your stock market research.
+            This platform provides a set of powerful tools & analytics to help with your stock market research.
             If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com).
             ### What's Provided?
             - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze)
