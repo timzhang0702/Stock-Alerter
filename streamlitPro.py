@@ -430,7 +430,7 @@ if option == 'Increased Volume':
         st.info('Unexpected Error')
 
 if option == 'Uptrend Pullback':
-    # try:
+    try:
         uptrend_pullback()
 
         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(upNasdaq, upNyse, SPREADSHEET_ID2)
@@ -466,11 +466,11 @@ if option == 'Uptrend Pullback':
                 st.info('Ticker Symbol Not Found')
                 footer()
 
-    # except:
-    #     st.info('Unexpected Error')
+    except:
+        st.info('Unexpected Error')
 
 if option == 'Bollinger Bands Squeeze':
-    # try:
+    try:
         bbs()
 
         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(bbsNasdaq, bbsNyse, SPREADSHEET_ID3)
@@ -505,8 +505,8 @@ if option == 'Bollinger Bands Squeeze':
             else:
                 st.info('Ticker Symbol Not Found')
                 footer()
-    # except:
-    #     st.info('Unexpected Error')
+    except:
+        st.info('Unexpected Error')
 
 if option == 'Search':
     try:
