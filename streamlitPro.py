@@ -325,7 +325,6 @@ def sendmail(mes):
     server.login(sender_email, password)
     server.sendmail(sender_email, rec_email, mes)
 
-@st.cache()
 def sheets(d1, d2, id):
     rows = [row[0] for row in read_sheets(d1, id)]
     rows.insert(0, 'Summary of Stocks')
