@@ -28,13 +28,15 @@ auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 SPREADSHEET_ID = '1n4Bt6sMnOz2ZGyEO4tIME7LK7usVNHOCtIIR4OB5FWc'
+SPREADSHEET_ID2 = '1pijdnbbWmWwnLvOgMOTefyzMjLffjI0DCmOdVLHVfI4'
+SPREADSHEET_ID3 = '1Z8o187REndfYG4DNFpb9ir9QV-t1hfb6gez8gBMaPt4'
 
-cels_to_read = "Sheet1"
-cels_to_read2 = "Sheet2"
-cels_to_read13 = "Sheet13"
-cels_to_read12 = "Sheet12"
-cels_to_read10 = "Sheet10"
-cels_to_read11 = "Sheet11"
+ivNasdaq = "Sheet1"
+ivNyse = "Sheet2"
+upNasdaq = "Sheet1"
+upNyse = "Sheet2"
+bbsNasdaq = "Sheet1"
+bbsNyse = "Sheet2"
 
 periodDict = {
         "1 Day": "1d",
@@ -149,10 +151,10 @@ def increased_volume():
         ---
         Looking at volume over time can help get a sense of the strength or conviction behind advances and declines in specific stocks.
         An sharp increase in volume can indicate new interest in a stock and can signal an uptrend. 
-        By understanding this, stocks with a sharp increase in volume that has not seen an as dramastic increase in price can present a profitable trading opportunity.
+        By understanding this, stock with a sharp increase in volume that has not seen an as dramastic increase in stock price can present a profitable trading opportunity.
         ### Stock Selection Criteria:
         - Current volume is greater than 2-times the 90-day average
-        - Current price has increased less than 15% from the previous day
+        - Current price has increased less than 15% than the previous day
         - Current volume is greater than 1 million
         
         #### For individual stock analytics, please select a stock ticker on the sidebar
@@ -170,7 +172,7 @@ def uptrend_pullback():
         By using the RSI indicator, a stock can be analyzed to be oversold or overbought. 
         This can help scan for profitable trading opportunities by recognizing that stock prices usually rebound. 
         ### Stock Selection Criteria:
-        - Current RSI is less than 30 
+        - Current RSI is les than 30 
         - Current price is great than the 200 day moving average
         - Current volume is greater than 500,000
         
@@ -184,7 +186,7 @@ def bbs():
     st.markdown(
         """
         ---
-        A Bollinger Band Squeeze occurs when volatility falls to low levels and the Bollinger Bands narrow. 
+        The Bollinger Band Squeeze occurs when volatility falls to low levels and the Bollinger Bands narrow. 
         According to John Bollinger, developer of Bollinger Bands, periods of low volatility are often followed by periods of high volatility. 
         Therefore, a volatility contraction or narrowing of the bands can foreshadow a significant advance or decline.
         Usually, an uptrend is signaled once a stock's price breaks above the upper band.
@@ -323,6 +325,19 @@ def sendmail(mes):
     server.login(sender_email, password)
     server.sendmail(sender_email, rec_email, mes)
 
+@st.cache()
+def sheets(d1, d2, id):
+    rows = [row[0] for row in read_sheets(d1, id)]
+    rows.insert(0, 'Summary of Stocks')
+    sector = [row[1] for row in read_sheets(d1, id)]
+    companyName = [row[2] for row in read_sheets(d1, id)]
+    volume = [row[3] for row in read_sheets(d1, id)]
+    rows2 = [row[0] for row in read_sheets(d2, id)]
+    sector2 = [row[1] for row in read_sheets(d2, id)]
+    companyName2 = [row[2] for row in read_sheets(d2, id)]
+    volume2 = [row[3] for row in read_sheets(d2, id)]
+
+    return rows, sector, companyName, volume, rows2, sector2, companyName2, volume2
 
 hide_decoration_bar_style = '''
     <style>
@@ -343,8 +358,8 @@ if option == 'Home':
         st.markdown(
             """
             ---
-            This platform provides a set of powerful tools & analytics to help with your stock market research.
-            If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com).
+            This program provides a set of powerful tools & analytics to help with your stock market research.
+            If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com)
             ### What's Provided?
             - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze)
             - Interactive stock charts
@@ -381,15 +396,7 @@ if option == 'Increased Volume':
     try:
         increased_volume()
 
-        rows = [row[0] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-        rows.insert(0, 'Summary of Stocks')
-        sector = [row[1] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-        companyName = [row[2] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-        volume = [row[3] for row in read_sheets(cels_to_read, SPREADSHEET_ID)]
-        rows2 = [row[0] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
-        sector2 = [row[1] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
-        companyName2 = [row[2] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
-        volume2 = [row[3] for row in read_sheets(cels_to_read2, SPREADSHEET_ID)]
+        rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(ivNasdaq, ivNyse, SPREADSHEET_ID)
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', rows + rows2)  # Select ticker symbol
         tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
@@ -423,18 +430,10 @@ if option == 'Increased Volume':
         st.info('Unexpected Error')
 
 if option == 'Uptrend Pullback':
-    try:
+    # try:
         uptrend_pullback()
 
-        rows = [row[0] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-        rows.insert(0, 'Summary of Stocks')
-        sector = [row[1] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-        companyName = [row[2] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-        volume = [row[3] for row in read_sheets(cels_to_read12, SPREADSHEET_ID)]
-        rows2 = [row[0] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
-        sector2 = [row[1] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
-        companyName2 = [row[2] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
-        volume2 = [row[3] for row in read_sheets(cels_to_read13, SPREADSHEET_ID)]
+        rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(upNasdaq, upNyse, SPREADSHEET_ID2)
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
         tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
@@ -467,22 +466,14 @@ if option == 'Uptrend Pullback':
                 st.info('Ticker Symbol Not Found')
                 footer()
 
-    except:
-        st.info('Unexpected Error')
+    # except:
+    #     st.info('Unexpected Error')
 
 if option == 'Bollinger Bands Squeeze':
-    try:
+    # try:
         bbs()
 
-        rows = [row[0] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-        rows.insert(0, 'Summary of Stocks')
-        sector = [row[1] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-        companyName = [row[2] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-        volume = [row[3] for row in read_sheets(cels_to_read10, SPREADSHEET_ID)]
-        rows2 = [row[0] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
-        sector2 = [row[1] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
-        companyName2 = [row[2] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
-        volume2 = [row[3] for row in read_sheets(cels_to_read11, SPREADSHEET_ID)]
+        rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(bbsNasdaq, bbsNyse, SPREADSHEET_ID3)
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
         tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
@@ -514,8 +505,8 @@ if option == 'Bollinger Bands Squeeze':
             else:
                 st.info('Ticker Symbol Not Found')
                 footer()
-    except:
-        st.info('Unexpected Error')
+    # except:
+    #     st.info('Unexpected Error')
 
 if option == 'Search':
     try:
