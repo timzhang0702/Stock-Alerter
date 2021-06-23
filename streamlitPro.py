@@ -544,7 +544,7 @@ if option == 'Search':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
-                footer()
+            footer()
             else:
                 st.info('Ticker Symbol Not Found')
                 footer()
