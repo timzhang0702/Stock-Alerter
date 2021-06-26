@@ -151,10 +151,10 @@ def increased_volume():
         ---
         Looking at volume over time can help get a sense of the strength or conviction behind advances and declines in specific stocks.
         An sharp increase in volume can indicate new interest in a stock and can signal an uptrend. 
-        By understanding this, stock with a sharp increase in volume that has not seen an as dramastic increase in stock price can present a profitable trading opportunity.
+        By understanding this, stocks with a sharp increase in volume that have not seen an as dramastic increase in price can present profitable trading opportunities.
         ### Stock Selection Criteria:
         - Current volume is greater than 2-times the 90-day average
-        - Current price has increased less than 15% than the previous day
+        - Current price has increased less than 15% from the 90-day average price
         - Current volume is greater than 1 million
         
         #### For individual stock analytics, please select a stock ticker on the sidebar
@@ -172,8 +172,8 @@ def uptrend_pullback():
         By using the RSI indicator, a stock can be analyzed to be oversold or overbought. 
         This can help scan for profitable trading opportunities by recognizing that stock prices usually rebound. 
         ### Stock Selection Criteria:
-        - Current RSI is les than 30 
-        - Current price is great than the 200 day moving average
+        - Current RSI is less than 30 
+        - Current price is great than the 200-day moving average
         - Current volume is greater than 500,000
         
         #### For individual stock analytics, please select a stock ticker on the sidebar
