@@ -14,7 +14,6 @@ import cufflinks as cf
 import yfinance as yf
 from htbuilder import HtmlElement, div, hr, a, p, styles
 from htbuilder.units import percent, px
-from rw_sheet import read_sheets
 import SessionState
 
 TWITTER_CONSUMER_KEY = 'BvbkjWzqKUKiUJuqpuf5DhZn5'
