@@ -390,6 +390,7 @@ if option == 'Increased Volume (coming soon)':
     try:
         increased_volume()
         st.info('Page In Development')
+        footer()
 #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(ivNasdaq, ivNyse, SPREADSHEET_ID)
 
 #         tickerSymbol = st.sidebar.selectbox('Stock Ticker', rows + rows2)  # Select ticker symbol
@@ -427,6 +428,7 @@ if option == 'Uptrend Pullback (coming soon)':
     try:
         uptrend_pullback()
         st.info('Page In Development')
+        footer()
 
 #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(upNasdaq, upNyse, SPREADSHEET_ID2)
 
@@ -468,6 +470,7 @@ if option == 'Bollinger Bands Squeeze (coming soon)':
     try:
         bbs()
         st.info('Page In Development')
+        footer()
 
 #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(bbsNasdaq, bbsNyse, SPREADSHEET_ID3)
 
