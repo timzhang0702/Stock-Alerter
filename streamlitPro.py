@@ -356,7 +356,7 @@ option = st.sidebar.selectbox('Screener', ('Home', 'Stock Search' ,'Increased Vo
 
 if option == 'Home':
     try:
-        st.markdown("<h1 style='text-align: center; color: black; font-weight:100;'><b>About</b></h1 >",
+        st.markdown("<h1 style='text-align: center; color: black; font-weight:100;'><b>Home</b></h1 >",
                     unsafe_allow_html=True)
         st.markdown(
             """
