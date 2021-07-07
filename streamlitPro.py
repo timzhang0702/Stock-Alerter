@@ -106,7 +106,7 @@ def layout(*args):
 
     st.markdown(str(foot), unsafe_allow_html=True)
 
-    st.markdown(<script>window.scrollTo(0,0);</script>, unsafe_allow_html=True)
+    st.markdown("""<script>window.scrollTo(0,0);</script>""", unsafe_allow_html=True)
 
 def footer():
     myargs = [
