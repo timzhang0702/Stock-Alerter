@@ -66,6 +66,7 @@ def layout(*args):
       #MainMenu {visibility: hidden;}
       footer {visibility: hidden;}
     </style>
+    <script>window.scrollTo(0,0);</script>
     """
 
     style_div = styles(
