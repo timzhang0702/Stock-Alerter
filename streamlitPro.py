@@ -118,7 +118,7 @@ def chart(tickerData, range, tickerSymbol):
     tickerDf = tickerData.history(interval=intervalDict[range],
                        period=periodDict[range])
     
-        r = requests.get(f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={tickerSymbol}&apikey=Y4NCX1DFBJCN4I82')
+    r = requests.get(f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={tickerSymbol}&apikey=Y4NCX1DFBJCN4I82')
     data = r.json()
 
     try:
