@@ -352,7 +352,7 @@ def email():
 st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
-option = st.sidebar.selectbox('Screener', ('Home', 'Stock Search' ,'Increased Volume (coming soon)', 'Uptrend Pullback (coming soon)', 'Bollinger Bands Squeeze (coming soon)'), 0)
+option = st.sidebar.selectbox('Screener', ('Home', 'Search' ,'Increased Volume (coming soon)', 'Uptrend Pullback (coming soon)', 'Bollinger Bands Squeeze (coming soon)'), 0)
 
 if option == 'Home':
     try:
@@ -361,7 +361,7 @@ if option == 'Home':
         st.markdown(
             """
             ---
-            This program provides a set of powerful tools & analytics to help with your stock market research.
+            This program provides a set of powerful tools & analytics to help with your stock research.
             If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com)
             ### What's Provided?
             - Interactive stock charts
@@ -505,7 +505,7 @@ if option == 'Bollinger Bands Squeeze (coming soon)':
     except:
         st.info('Page In Development')
 
-if option == 'Stock Search':
+if option == 'Search':
     try:
         search()
         session_state = SessionState.get(checkboxed=False)
