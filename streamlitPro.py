@@ -117,12 +117,16 @@ def footer():
 def chart(tickerData, range, tickerSymbol):
     tickerDf = tickerData.history(interval=intervalDict[range],
                        period=periodDict[range])
+    
+        r = requests.get(f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={tickerSymbol}&apikey=Y4NCX1DFBJCN4I82')
+    data = r.json()
+
     try:
-        string_name = tickerData.info['longName']
+        string_name = data['Name']
     except:
         string_name = tickerSymbol
     try:
-        string_summary = tickerData.info['longBusinessSummary']
+        string_summary = data['Description']
     except:
         string_summary = "Currently Unavailable"
   
