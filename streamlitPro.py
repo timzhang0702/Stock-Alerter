@@ -367,7 +367,7 @@ if option == 'Home':
             - Interactive stock charts
             - Popular indicators (Bollinger Bands, RSI, SMA)
             - Twitter sentiment for individual stocks
-            #### Check out the Search Feature from the filters to learn more! 
+            - Check out the Search feature from the filters to learn more! 
             ### Coming Soon...
             - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze) 
             ---
