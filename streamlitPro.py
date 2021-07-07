@@ -517,7 +517,7 @@ if option == 'Stock Search':
         with st.form(key='my_form'):
             col1, col2 = st.beta_columns([6.3, 1])
             with col1:
-                tickerSymbol = st.text_input('Enter A Stock Ticker', 'aapl')
+                tickerSymbol = st.text_input('Enter A Stock Ticker', 'AAPL')
             with col2:
                 st.header('')
                 submit_button = st.form_submit_button(label="Search")
