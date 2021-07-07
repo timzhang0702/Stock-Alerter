@@ -522,7 +522,7 @@ if option == 'Stock Search':
     try:
         search()
         session_state = SessionState.get(checkboxed=False)
-        with st.form(key='my_form'):
+        with st.form(key='my_form1'):
             col1, col2 = st.beta_columns([6.3, 1])
             with col1:
                 tickerSymbol = st.text_input('Enter A Stock Ticker', 'AAPL')
@@ -550,7 +550,7 @@ if option == 'Stock Search':
                 st.plotly_chart(fig, config=config)
 
                 agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-
+                email()
                 if agree:
                     taWrite()
                     fig, config = ta(tickerSymbol)
