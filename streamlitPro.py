@@ -52,8 +52,8 @@ intervalDict = {
         "6 Months": "1d",
         "YTD": "1d",
         "1 Year": "1d",
-        "5 Years": "1wk",
-        "Max": "1wk",
+        "5 Years": "1mo",
+        "Max": "1mo",
     }
 
 def link(link, text, **style):
