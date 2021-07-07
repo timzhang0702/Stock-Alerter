@@ -118,16 +118,10 @@ def chart(tickerData, range, tickerSymbol):
     tickerDf = tickerData.history(interval=intervalDict[range],
                        period=periodDict[range])
 
-    try:
-        string_name = tickerData.info['longName']
-    except:
-        string_name = tickerSymbol
-    try:
-        string_summary = tickerData.info['longBusinessSummary']
-    except:
-        string_summary = "Currently Unavailable"
-
-
+    
+    string_name = tickerData.info['longName']
+    string_summary = tickerData.info['longBusinessSummary']
+  
     qf = cf.QuantFig(tickerDf, name='Price', title='Stock Chart')
     qf.add_sma(10, width=2, color='green', name='SMA')
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='Bollinger')
