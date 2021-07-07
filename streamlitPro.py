@@ -106,8 +106,6 @@ def layout(*args):
 
     st.markdown(str(foot), unsafe_allow_html=True)
 
-    st.markdown("""<script>window.scrollTo(0,0);</script>""", unsafe_allow_html=True)
-
 def footer():
     myargs = [
         "Copyright © 2021 ",
@@ -351,13 +349,6 @@ def email():
         elif submit_button:
             st.error("Invalid Email")
 
-hide_decoration_bar_style = '''
-    <style>
-        header {visibility: hidden;}
-    </style>
-'''
-st.markdown(hide_decoration_bar_style, unsafe_allow_html=True)
-
 st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
@@ -560,7 +551,7 @@ if option == 'Stock Search':
         st.info('Page In Development')
 
 
-
+st.markdown("""<script>window.scrollTo(0,0);</script>""", unsafe_allow_html=True)
 
 
 
