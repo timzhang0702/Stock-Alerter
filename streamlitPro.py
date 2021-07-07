@@ -380,7 +380,7 @@ if option == 'Home':
     except:
         st.info('Page In Development')
 
-if option == 'Increased Volume (coming soon)':
+if option == '*Increased Volume':
     try:
         increased_volume()
         st.info('Page In Development')
@@ -419,7 +419,7 @@ if option == 'Increased Volume (coming soon)':
     except:
         st.info('Page In Development')
 
-if option == 'Uptrend Pullback (coming soon)':
+if option == '*Uptrend Pullback':
     try:
         uptrend_pullback()
         st.info('Page In Development')
@@ -462,7 +462,7 @@ if option == 'Uptrend Pullback (coming soon)':
     except:
         st.info('Page In Development')
 
-if option == 'Bollinger Bands Squeeze (coming soon)':
+if option == '*Bollinger Bands Squeeze':
     try:
         bbs()
         st.info('Page In Development')
