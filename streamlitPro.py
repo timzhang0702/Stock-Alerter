@@ -359,6 +359,7 @@ if option == 'Home':
             If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com)
             ### What's Provided?
             - Interactive stock charts
+            - Popular indicators (Bollinger Bands, RSI, SMA)
             - Twitter sentiment for individual stocks
             ### Coming Soon...
             - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze)
