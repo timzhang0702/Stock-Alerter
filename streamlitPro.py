@@ -66,7 +66,6 @@ def layout(*args):
       #MainMenu {visibility: hidden;}
       footer {visibility: hidden;}
     </style>
-    <script>window.scrollTo(0,0);</script>
     """
 
     style_div = styles(
@@ -106,6 +105,8 @@ def layout(*args):
             body(arg)
 
     st.markdown(str(foot), unsafe_allow_html=True)
+
+    st.markdown(<script>window.scrollTo(0,0);</script>, unsafe_allow_html=True)
 
 def footer():
     myargs = [
