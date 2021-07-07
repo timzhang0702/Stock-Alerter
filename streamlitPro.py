@@ -352,7 +352,7 @@ def email():
 st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
-option = st.sidebar.selectbox('Dashboard', ('Home', 'Search' ,"*Increased Volume (coming soon)*", '*Uptrend Pullback (coming soon)*', '*Bollinger Bands Squeeze (coming soon)*'), 0)
+option = st.sidebar.selectbox('Dashboard', ('Home', 'Search' ,'Increased Volume (coming soon)', 'Uptrend Pullback (coming soon)', 'Bollinger Bands Squeeze (coming soon)'), 0)
 
 if option == 'Home':
     try:
@@ -367,7 +367,7 @@ if option == 'Home':
             - Interactive stock charts
             - Popular indicators (Bollinger Bands, RSI, SMA)
             - Twitter sentiment for individual stocks
-            - Check out the Search dashboard from the filters to learn more! 
+            - Select the Search dashboard from the filters to learn more! 
             ### Coming Soon...
             - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze) 
             ---
