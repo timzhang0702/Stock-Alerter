@@ -336,6 +336,25 @@ def sheets(d1, d2, id):
 
     return rows, sector, companyName, volume, rows2, sector2, companyName2, volume2
 
+def email():
+    with st.form(key='my_form'):
+        st.header("Want to be notified of new features?")
+        col1, col2 = st.beta_columns([5, 1])
+        regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
+
+        with col1:
+            text_input = st.text_input('Subscribe today to get the latest news and updates.', 'Email Address')
+        with col2:
+            st.header('')
+            submit_button = st.form_submit_button(label="Subscribe")
+        if submit_button and re.search(regex, text_input):
+            st.info("You've been subscribed successfully!")
+            st.balloons()
+            sendmail(text_input)
+
+        elif submit_button:
+            st.error("Invalid Email")
+
 hide_decoration_bar_style = '''
     <style>
         header {visibility: hidden;}
@@ -369,23 +388,7 @@ if option == 'Home':
             """
         )
 
-        with st.form(key='my_form'):
-            st.header("Want to be notified of new features?")
-            col1, col2 = st.beta_columns([5,1])
-            regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
-
-            with col1:
-                text_input = st.text_input('Subscribe today to get the latest news and updates.', 'Email Address')
-            with col2:
-                st.header('')
-                submit_button = st.form_submit_button(label="Subscribe")
-            if submit_button and re.search(regex, text_input):
-                st.info("You've been subscribed successfully!")
-                st.balloons()
-                sendmail(text_input)
-
-            elif submit_button:
-                st.error("Invalid Email")
+        email()
 
         footer()
     except:
@@ -395,6 +398,7 @@ if option == 'Increased Volume (coming soon)':
     try:
         increased_volume()
         st.info('Page In Development')
+        email()
         footer()
 #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(ivNasdaq, ivNyse, SPREADSHEET_ID)
 
@@ -433,6 +437,7 @@ if option == 'Uptrend Pullback (coming soon)':
     try:
         uptrend_pullback()
         st.info('Page In Development')
+        email()
         footer()
 
 #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(upNasdaq, upNyse, SPREADSHEET_ID2)
@@ -475,6 +480,7 @@ if option == 'Bollinger Bands Squeeze (coming soon)':
     try:
         bbs()
         st.info('Page In Development')
+        email()
         footer()
 
 #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(bbsNasdaq, bbsNyse, SPREADSHEET_ID3)
@@ -544,7 +550,9 @@ if option == 'Stock Search':
                 st.plotly_chart(fig, config=config)
 
                 agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-
+                
+                email()
+                
                 if agree:
                     taWrite()
                     fig, config = ta(tickerSymbol)
