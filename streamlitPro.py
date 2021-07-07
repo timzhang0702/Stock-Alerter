@@ -357,6 +357,7 @@ if option == 'Home':
             ### What's Provided?
             - Interactive stock charts
             - Twitter sentiment for individual stocks
+            ### Coming Soon
             - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze)
             
             #### Check out the sidebar filters to learn more!  
