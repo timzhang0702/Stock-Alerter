@@ -134,7 +134,7 @@ def chart(tickerData, range, tickerSymbol):
     qf.add_sma(10, width=2, color='green', name='SMA')
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='BBands')
     qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue')
-    qf.add_rsi(periods=14,color='midnightblue', name='RSI', showbands=True, legendgroup=True)
+    qf.add_rsi(periods=14,color='midnightblue', name='RSI', showbands=True, legendgroup=False)
     layout = dict(xaxis=dict(rangeslider=dict(visible=False),categoryorder="category ascending", type="category", visible=False))
     config = {'displaylogo': False, "modeBarButtonsToRemove": ['pan2d', 'zoom2d', 'select2d', 'lasso2d', 'toggleSpikelines', 'autoScale2d']}
     fig = qf.iplot(asFigure=True, layout=layout)
