@@ -550,9 +550,7 @@ if option == 'Stock Search':
                 st.plotly_chart(fig, config=config)
 
                 agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-                
-                email()
-                
+
                 if agree:
                     taWrite()
                     fig, config = ta(tickerSymbol)
