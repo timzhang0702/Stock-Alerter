@@ -154,7 +154,6 @@ def increased_volume():
         - Current volume is greater than 2-times the 90-day average
         - Current price has increased less than 15% from the 90-day average price
         - Current volume is greater than 1 million
-
         """
     )
     st.write('---')
@@ -172,7 +171,6 @@ def uptrend_pullback():
         - Current RSI is less than 30 
         - Current price is great than the 200-day moving average
         - Current volume is greater than 500,000
-
         """
     )
     st.write('---')
@@ -190,7 +188,6 @@ def bbs():
         - Low volatility during the last 5 days 
         - Current price is great than the upper bollinger band
         - Current volume is greater than 1 million
-
         """
     )
     st.write('---')
