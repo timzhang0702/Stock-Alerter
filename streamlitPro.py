@@ -117,10 +117,14 @@ def footer():
 def chart(tickerData, range, tickerSymbol):
     tickerDf = tickerData.history(interval=intervalDict[range],
                        period=periodDict[range])
-
-    
-    string_name = tickerData.info['longName']
-    string_summary = tickerData.info['longBusinessSummary']
+    try:
+        string_name = tickerData.info['longName']
+    except:
+        string_name = tickerSymbol
+    try:
+        string_summary = tickerData.info['longBusinessSummary']
+    except:
+        string_summary = "Currently Unavailable"
   
     qf = cf.QuantFig(tickerDf, name='Price', title='Stock Chart')
     qf.add_sma(10, width=2, color='green', name='SMA')
@@ -518,6 +522,7 @@ if option == 'Stock Search':
             session_state.checkboxed = True
 
             tickerData = yf.Ticker(tickerSymbol)
+            st.write(tickerData.info['longBusinessSummary'])
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
