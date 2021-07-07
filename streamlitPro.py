@@ -352,7 +352,7 @@ def email():
 st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
-option = st.sidebar.selectbox('Features', ('Home', 'Search' ,'Increased Volume (coming soon)', 'Uptrend Pullback (coming soon)', 'Bollinger Bands Squeeze (coming soon)'), 0)
+option = st.sidebar.selectbox('Features', ('Home', 'Search' ,'*Increased Volume (coming soon)*', '*Uptrend Pullback (coming soon)*', '*Bollinger Bands Squeeze (coming soon)*'), 0)
 
 if option == 'Home':
     try:
