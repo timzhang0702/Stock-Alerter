@@ -522,7 +522,6 @@ if option == 'Stock Search':
             session_state.checkboxed = True
 
             tickerData = yf.Ticker(tickerSymbol)
-            st.write(tickerData.info['longBusinessSummary'])
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
