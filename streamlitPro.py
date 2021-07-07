@@ -542,10 +542,10 @@ if option == 'Search':
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
                 email()
-                footer()
+
             else:
                 st.info('Ticker Symbol Not Found')
-                footer()
+        footer()
     except:
         st.info('Page In Development')
 
