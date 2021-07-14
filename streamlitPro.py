@@ -142,12 +142,8 @@ def increased_volume():
         """
         ---
         Looking at volume over time can help get a sense of the strength or conviction behind advances and declines in specific stocks.
-        An sharp increase in volume can indicate new interest in a stock and can signal an uptrend. 
-        By understanding this, stocks with a sharp increase in volume that have not seen an as dramastic increase in price can present profitable trading opportunities.
-        ### Stock Selection Criteria:
-        - Current volume is greater than 2-times the 90-day average
-        - Current price has increased less than 15% from the 90-day average price
-        - Current volume is greater than 1 million
+        This screener looks for stocks with a sharp increase in volume, which can indicate new interest in a stock and signal an uptrend. 
+        #### Below is the overview of stocks found with this screener. For a specific stock's analytics, select the corresponding ticker symbol from the sidebar.
         """
     )
     st.write('---')
