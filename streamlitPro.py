@@ -415,7 +415,6 @@ if option == '*Increased Volume':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
-                email()
 
             except:
                 st.info('Ticker Symbol Not Found')
@@ -456,7 +455,6 @@ if option == '*Uptrend Pullback':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
-                email()
 
             except:
                 st.info('Ticker Symbol Not Found')
@@ -498,7 +496,6 @@ if option == '*Bollinger Bands Squeeze':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
-                email()
 
             except:
                 st.info('Ticker Symbol Not Found')
@@ -544,7 +541,6 @@ if option == 'Search':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
-                email()
 
             except:
                 st.info('Ticker Symbol Not Found')
