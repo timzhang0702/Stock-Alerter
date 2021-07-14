@@ -109,9 +109,8 @@ def chart(range, tickerSymbol):
     if periodDict[range] == "Max":
         tickerDf = si.get_data(tickerSymbol, interval=intervalDict[range])
     else:
-        tickerDf = si.get_data(tickerSymbol, start_date=datetime.datetime.now() -
-                                  datetime.timedelta(days=periodDict[range]),
-                                  end_date=datetime.datetime.now(), interval=intervalDict[range])
+        tickerDf = si.get_data(tickerSymbol, start_date=datetime.now() - timedelta(days=periodDict[range]),
+                                  end_date=datetime.now(), interval=intervalDict[range])
 
     r = requests.get(
         f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={tickerSymbol}&apikey=Y4NCX1DFBJCN4I82')
