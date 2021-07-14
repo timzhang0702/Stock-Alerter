@@ -125,7 +125,7 @@ def chart(range, tickerSymbol):
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='BBands')
     qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue')
     qf.add_rsi(periods=14, color='midnightblue', name='RSI', showbands=False)
-    qf.add_macd(legendgroup=True, name='MACD', colors=['red', 'black'])
+    qf.add_macd(legendgroup=True, name='MACD', colors=['red', 'black'], width=2)
     layout = dict(
         xaxis=dict(rangeslider=dict(visible=False), categoryorder="category ascending", type="category", visible=False))
     config = {'displaylogo': False,
