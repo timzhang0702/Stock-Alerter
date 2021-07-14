@@ -510,7 +510,7 @@ if option == '*Bollinger Bands Squeeze':
         st.info('Page In Development')
 
 if option == 'Search':
-    try:
+#     try:
         search()
         session_state = SessionState.get(checkboxed=False)
         with st.form(key='my_form1'):
@@ -551,8 +551,8 @@ if option == 'Search':
             else:
                 st.info('Ticker Symbol Not Found')
         footer()
-    except:
-        st.info('Page In Development')
+#     except:
+#         st.info('Page In Development')
 
 
 
