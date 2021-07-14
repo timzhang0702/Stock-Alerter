@@ -369,11 +369,10 @@ if option == 'Home':
             If you have a suggestion for improvement or feedback, please contact [Tim Zhang](mailto:timzhang0702@gmail.com)
             ### What's Provided?
             - Interactive stock charts
-            - Popular indicators (Bollinger Bands, RSI, SMA)
+            - Popular indicators (Bollinger Bands, RSI, SMA, MACD)
             - Twitter sentiment for individual stocks
-            - Select the Search dashboard from the filters to learn more! 
-            ### Coming Soon...
-            - Stock screener lists (Increased Volume, Uptrend Pullback, Bollinger Bands Squeeze) 
+            - Stock Pattern Screeners (Increased Volume, Oversold Stocks, Bollinger Bands, MACD Crossover)
+            - Select a screener from the dashboard filters to learn more! 
             ---
             """
         )
