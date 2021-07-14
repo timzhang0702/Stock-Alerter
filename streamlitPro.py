@@ -321,14 +321,14 @@ def sheets(url):
     df_list = pd.read_html(html)
     dfc = df_list[-3]
 
-    Symbol = dfc['Symbol']
+    Symbol = dfc['Symbol'].tolist()
     Symbol.insert(0, 'Summary of Stocks')
-    Open = dfc['Open']
-    High = dfc['High']
-    Low = dfc['Low']
-    Close = dfc['Close']
-    Volume = dfc['Volume']
-    pctchange = dfc['% Change']
+    Open = dfc['Open'].tolist()
+    High = dfc['High'].tolist()
+    Low = dfc['Low'].tolist()
+    Close = dfc['Close'].tolist()
+    Volume = dfc['Volume'].tolist()
+    pctchange = dfc['% Change'].tolist()
 
     return Symbol, Open, High, Low, Close, Volume, pctchange
 
