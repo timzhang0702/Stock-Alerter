@@ -120,12 +120,12 @@ def chart(range, tickerSymbol):
     except:
         string_summary = "Currently Unavailable"
 
-    qf = cf.QuantFig(tickerDf, name='Price', title='Stock Chart')
+    qf = cf.QuantFig(tickerDf, name='Price', title='Stock Chart', margin=dict(l=0,r=40,b=0,t=0))
     qf.add_sma(10, width=2, color='green', name='SMA')
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='BBands')
     qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue', margin=dict(l=0,r=40,b=0,t=0))
-    qf.add_rsi(periods=14, color='midnightblue', name='RSI', showbands=False)
-    qf.add_macd(legendgroup=True, name='MACD', colors=['red', 'black'])
+    qf.add_rsi(periods=14, color='midnightblue', name='RSI', showbands=False, margin=dict(l=0,r=40,b=0,t=0))
+    qf.add_macd(legendgroup=True, name='MACD', colors=['red', 'black'], margin=dict(l=0,r=40,b=0,t=0))
     layout = dict(
         xaxis=dict(rangeslider=dict(visible=False), categoryorder="category ascending", type="category", visible=False))
     config = {'displaylogo': False,
