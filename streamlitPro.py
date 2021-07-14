@@ -125,12 +125,13 @@ def chart(range, tickerSymbol):
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='BBands')
     qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue')
     qf.add_rsi(periods=14, color='midnightblue', name='RSI', showbands=False)
+    qf.add_macd()
     layout = dict(
         xaxis=dict(rangeslider=dict(visible=False), categoryorder="category ascending", type="category", visible=False))
     config = {'displaylogo': False,
               "modeBarButtonsToRemove": ['pan2d', 'zoom2d', 'select2d', 'lasso2d', 'toggleSpikelines', 'autoScale2d']}
     fig = qf.iplot(asFigure=True, layout=layout)
-    fig.update_layout(height=800, title_text=string_name, title_x=0.5, showlegend=True,
+    fig.update_layout(height=1000, title_text=string_name, title_x=0.5, showlegend=True,
                       legend=dict(orientation="h", yanchor="top", y=1.02, xanchor="center", x=0.5))
     return string_name, string_summary, fig, config
 
@@ -382,7 +383,7 @@ if option == 'Home':
 if option == 'Increased Volume':
     try:
         increased_volume()
-        Symbol, Open, High, Low, Close, Volume, pctchange = sheets(url = 'https://stock-screener.org/pullback-stock-screener.aspx')
+        Symbol, Open, High, Low, Close, Volume, pctchange = sheets(url = 'https://stock-screener.org/unusual-volume-stocks.aspx')
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
         if tickerSymbol == 'Summary of Stocks':
