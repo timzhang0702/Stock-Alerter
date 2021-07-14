@@ -379,7 +379,7 @@ if option == 'Home':
     except:
         st.info('Page In Development')
 
-if option == '*Increased Volume':
+if option == 'Increased Volume':
     try:
         increased_volume()
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(url = 'https://stock-screener.org/pullback-stock-screener.aspx')
@@ -417,7 +417,7 @@ if option == '*Increased Volume':
     except:
         st.info('Page In Development')
 
-if option == '*Uptrend Pullback':
+if option == 'Uptrend Pullback':
     try:
         uptrend_pullback()
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
@@ -457,7 +457,7 @@ if option == '*Uptrend Pullback':
     except:
         st.info('Page In Development')
 
-if option == '*Bollinger Bands Squeeze':
+if option == 'Bollinger Bands Squeeze':
     try:
         bbs()
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
