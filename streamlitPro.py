@@ -205,7 +205,7 @@ def table(Symbol, Open, High, Low, Close, Volume, pctchange):
     st.write("---")
 
     fig = go.Figure(
-        data=go.Table(columnorder=[1, 2, 3, 4], columnwidth=[50, 50, 50, 50, 50, 50, 50],
+        data=go.Table(columnorder=[1, 2, 3, 4, 5, 6, 7], columnwidth=[50, 50, 50, 50, 50, 50, 50],
                       header=dict(values=['Ticker', 'Open', 'High', 'Low', 'Close', 'Volume', 'Price Change'],
                                   fill_color='#FD8E72', align='left'),
                       cells=dict(values=[Symbol[1:], Open, High, Low, Close, Volume, pctchange],
