@@ -123,7 +123,7 @@ def chart(range, tickerSymbol):
     qf = cf.QuantFig(tickerDf, name='Price', title='Stock Chart')
     qf.add_sma(10, width=2, color='green', name='SMA')
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='BBands')
-    qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue')
+    qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue', margin=dict(l=0,r=40,b=0,t=0))
     qf.add_rsi(periods=14, color='midnightblue', name='RSI', showbands=False)
     qf.add_macd(legendgroup=True, name='MACD', colors=['red', 'black'])
     layout = dict(
