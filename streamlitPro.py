@@ -203,7 +203,7 @@ def table(Symbol, Open, High, Low, Close, Volume, pctchange):
                                   fill_color='#FD8E72', align='left'),
                       cells=dict(values=[Symbol[1:], Open, High, Low, Close, Volume, pctchange],
                                  fill_color='#E5ECF6', align='left')))
-    fig.update_layout(height=(len(Open)) * 21 + 10, margin=dict(l=1, r=1, b=0, t=0))
+    fig.update_layout(height=(len(Open)) * 21 , margin=dict(l=1, r=1, b=0, t=0))
     st.write(fig)
     st.write("---")
 
