@@ -150,37 +150,44 @@ def increased_volume():
     st.write('---')
 
 
-def uptrend_pullback():
-    st.markdown("<h1 style='text-align: center; color: black;'>Uptrend Pullback</h1>", unsafe_allow_html=True)
+def macd():
+    st.markdown("<h1 style='text-align: center; color: black;'>MACD Crossover</h1>", unsafe_allow_html=True)
+    st.markdown(
+        """
+        ---
+        The MACD Crossover is a signal that indicates bullish momentum from a stock, occuring when the MACD line crosses above the signal line. 
+        This screener filters for stocks that have recently experienced a MACD Crossover, which can present a profitable short-term trading opportunity.
+        Below is the overview of stocks found with this screener.
+        #### For a specific stock's analytics, select the corresponding ticker symbol from the sidebar.
+        """
+    )
+    st.write('---')
+    
+def oversold():
+    st.markdown("<h1 style='text-align: center; color: black;'>Oversold Stocks</h1>", unsafe_allow_html=True)
     st.markdown(
         """
         ---
         In the long run, the stock market is in an uptrend. 
         However, in the short run, panic-selling and profit-taking causes stock prices to fall below it's intrinsic value. 
-        By using the RSI indicator, a stock can be analyzed to be oversold or overbought. 
-        This can help scan for profitable trading opportunities by recognizing that stock prices usually rebound. 
-        ### Stock Selection Criteria:
-        - Current RSI is less than 30 
-        - Current price is great than the 200-day moving average
-        - Current volume is greater than 500,000
+        This screener uses the RSI indicator to find stocks that are oversold, 
+        which helps scan for profitable trading opportunities by recognizing that stock prices usually rebound. 
+        Below is the overview of stocks found with this screener.
+        #### For a specific stock's analytics, select the corresponding ticker symbol from the sidebar.
         """
     )
     st.write('---')
 
 
 def bbs():
-    st.markdown("<h1 style='text-align: center; color: black;'>Bollinger Bands Squeeze</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 style='text-align: center; color: black;'>Bollinger Bands</h1>", unsafe_allow_html=True)
     st.markdown(
         """
         ---
-        The Bollinger Band Squeeze occurs when volatility falls to low levels and the Bollinger Bands narrow. 
-        According to John Bollinger, developer of Bollinger Bands, periods of low volatility are often followed by periods of high volatility. 
-        Therefore, a volatility contraction or narrowing of the bands can foreshadow a significant advance or decline.
-        Usually, an uptrend is signaled once a stock's price breaks above the upper band.
-        ### Stock Selection Criteria:
-        - Low volatility during the last 5 days 
-        - Current price is great than the upper bollinger band
-        - Current volume is greater than 1 million
+        The Bollinger Bands are volatility bands placed above and below a moving average.
+        This screener looks for stocks whose prices have crossed below the lower bands, which can present a buy signal.
+        Below is the overview of stocks found with this screener.
+        #### For a specific stock's analytics, select the corresponding ticker symbol from the sidebar.
         """
     )
     st.write('---')
@@ -348,7 +355,7 @@ st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
 option = st.sidebar.selectbox('Dashboard',
-                              ('Home', 'Search', 'Increased Volume', 'Uptrend Pullback', 'Bollinger Bands Squeeze'),
+                              ('Home', 'Search', 'Increased Volume', 'Oversold Stocks', 'Bollinger Bands', 'MACD Crossover'),
                               0)
 
 if option == 'Home':
@@ -415,11 +422,11 @@ if option == 'Increased Volume':
     except:
         st.info('Page In Development')
 
-if option == 'Uptrend Pullback':
+if option == 'Oversold Stocks':
     try:
-        uptrend_pullback()
+        oversold()
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
-            url='https://stock-screener.org/pullback-stock-screener.aspx')
+            url='https://stock-screener.org/rsi-oversold.aspx')
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
         if tickerSymbol == 'Summary of Stocks':
@@ -455,11 +462,50 @@ if option == 'Uptrend Pullback':
     except:
         st.info('Page In Development')
 
-if option == 'Bollinger Bands Squeeze':
+if option == 'Bollinger Bands':
     try:
         bbs()
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
-            url='https://stock-screener.org/pullback-stock-screener.aspx')
+            url='https://stock-screener.org/bollinger-band-stock-screener.aspx')
+
+        tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
+        if tickerSymbol == 'Summary of Stocks':
+            table(Symbol, Open, High, Low, Close, Volume, pctchange)
+        else:
+            range = st.sidebar.selectbox("Date Range", (
+                '1 Month', '3 Months', '6 Months', '1 Year'), 1)
+            try:
+                string_name, string_summary, fig, config = chart(range, tickerSymbol)
+                st.markdown(
+                    "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                    unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
+                st.plotly_chart(fig, config=config)
+
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
+
+            except:
+                st.info('Ticker Symbol Not Found')
+        email()
+        footer()
+    except:
+        st.info('Page In Development')
+        
+if option == 'MACD Crossover':
+    try:
+        macd()
+        Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
+            url='https://stock-screener.org/macd-crossover.aspx')
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
         if tickerSymbol == 'Summary of Stocks':
