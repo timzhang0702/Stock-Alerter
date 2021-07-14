@@ -396,46 +396,8 @@ if option == '*Increased Volume':
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
-            string_name, string_summary, fig, config = chart(range, tickerSymbol)
-            if string_name != tickerSymbol:
-                st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >", unsafe_allow_html=True)
-                st.write("---")
-                st.info(string_summary)
-                st.write("---")
-                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >", unsafe_allow_html=True)
-                st.write("---")
-                st.plotly_chart(fig, config=config)
-
-                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-
-                if agree:
-                    taWrite()
-                    fig, config = ta(tickerSymbol)
-                    st.plotly_chart(fig, config=config)
-                email()
-                footer()
-            else:
-                st.info('Ticker Symbol Not Found')
-                email()
-                footer()
-    except:
-        st.info('Page In Development')
-
-if option == '*Uptrend Pullback':
-    try:
-        uptrend_pullback()
-        Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
-            url='https://stock-screener.org/pullback-stock-screener.aspx')
-
-        tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
-        if tickerSymbol == 'Summary of Stocks':
-            table(Symbol, Open, High, Low, Close, Volume, pctchange)
-            footer()
-        else:
-            range = st.sidebar.selectbox("Date Range", (
-                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
-            string_name, string_summary, fig, config = chart(range, tickerSymbol)
-            if string_name != tickerSymbol:
+            try:
+                string_name, string_summary, fig, config = chart(range, tickerSymbol)
                 st.markdown(
                     "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
                     unsafe_allow_html=True)
@@ -454,11 +416,52 @@ if option == '*Uptrend Pullback':
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
                 email()
-                footer()
-            else:
+
+            except:
                 st.info('Ticker Symbol Not Found')
+        email()
+        footer()
+    except:
+        st.info('Page In Development')
+
+if option == '*Uptrend Pullback':
+    try:
+        uptrend_pullback()
+        Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
+            url='https://stock-screener.org/pullback-stock-screener.aspx')
+
+        tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
+        if tickerSymbol == 'Summary of Stocks':
+            table(Symbol, Open, High, Low, Close, Volume, pctchange)
+            footer()
+        else:
+            range = st.sidebar.selectbox("Date Range", (
+                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
+            try:
+                string_name, string_summary, fig, config = chart(range, tickerSymbol)
+                st.markdown(
+                    "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                    unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
+                st.plotly_chart(fig, config=config)
+
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
+
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
                 email()
-                footer()
+
+            except:
+                st.info('Ticker Symbol Not Found')
+        email()
+        footer()
 
     except:
         st.info('Page In Development')
@@ -476,8 +479,8 @@ if option == '*Bollinger Bands Squeeze':
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
-            string_name, string_summary, fig, config = chart(range, tickerSymbol)
-            if string_name != tickerSymbol:
+            try:
+                string_name, string_summary, fig, config = chart(range, tickerSymbol)
                 st.markdown(
                     "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
                     unsafe_allow_html=True)
@@ -496,11 +499,11 @@ if option == '*Bollinger Bands Squeeze':
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
                 email()
-                footer()
-            else:
+
+            except:
                 st.info('Ticker Symbol Not Found')
-                email()
-                footer()
+        email()
+        footer()
     except:
         st.info('Page In Development')
 
@@ -520,7 +523,7 @@ if option == 'Search':
             session_state.checkboxed = True
 
             range = st.sidebar.selectbox("Date Range", (
-                '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
             
             try:
                 string_name, string_summary, fig, config = chart(range, tickerSymbol)
@@ -545,6 +548,7 @@ if option == 'Search':
 
             except:
                 st.info('Ticker Symbol Not Found')
+        email()
         footer()
 #     except:
 #         st.info('Page In Development')
