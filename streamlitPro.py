@@ -15,6 +15,8 @@ import yfinance as yf
 from htbuilder import HtmlElement, div, hr, a, p, styles
 from htbuilder.units import percent, px
 import SessionState
+import yahoo_fin.stock_info as si
+import requests_html
 
 TWITTER_CONSUMER_KEY = 'BvbkjWzqKUKiUJuqpuf5DhZn5'
 TWITTER_CONSUMER_SECRET = 'N2RVYi0LReDZA2tBPykVDUKBF0CuTuKHx9qtQorYL9TNV6nqq9'
@@ -27,26 +29,19 @@ auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 periodDict = {
-    "1 Day": "1d",
-    "5 Days": "5d",
-    "1 Month": "1mo",
-    "3 Months": "3mo",
-    "6 Months": "6mo",
-    "YTD": "ytd",
-    "1 Year": "1y",
-    "5 Years": "5y",
-    "Max": "max",
+    "5 Days": 5,
+    "1 Month": 30,
+    "3 Months": 90,
+    "6 Months": 120,
+    "1 Year": 365,
 }
 intervalDict = {
-    "1 Day": "1m",
-    "5 Days": "15m",
-    "1 Month": "1h",
+    "5 Days": "1d",
+    "1 Month": "1d",
     "3 Months": "1d",
     "6 Months": "1d",
-    "YTD": "1d",
-    "1 Year": "1d",
-    "5 Years": "1wk",
-    "Max": "1wk",
+    "1 Year": "1wk",
+    "Max": "1mo",
 }
 
 
@@ -110,9 +105,13 @@ def footer():
 
 
 @st.cache(suppress_st_warning=True)
-def chart(tickerData, range, tickerSymbol):
-    tickerDf = tickerData.history(interval=intervalDict[range],
-                                  period=periodDict[range])
+def chart(range, tickerSymbol):
+    if periodDict[range] == "Max":
+        tickerDf = si.get_data(tickerSymbol, interval=intervalDict[range])
+    else:
+        tickerDf = si.get_data(tickerSymbol, start_date=datetime.datetime.now() -
+                                  datetime.timedelta(days=periodDict[range]),
+                                  end_date=datetime.datetime.now(), interval=intervalDict[range])
 
     r = requests.get(
         f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={tickerSymbol}&apikey=Y4NCX1DFBJCN4I82')
@@ -392,13 +391,12 @@ if option == '*Increased Volume':
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(url = 'https://stock-screener.org/pullback-stock-screener.aspx')
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
-        tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
         if tickerSymbol == 'Summary of Stocks':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
             footer()
         else:
             range = st.sidebar.selectbox("Date Range", (
-                '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
             if string_name != tickerSymbol:
                 st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >", unsafe_allow_html=True)
@@ -431,13 +429,12 @@ if option == '*Uptrend Pullback':
             url='https://stock-screener.org/pullback-stock-screener.aspx')
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
-        tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
         if tickerSymbol == 'Summary of Stocks':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
             footer()
         else:
             range = st.sidebar.selectbox("Date Range", (
-                '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
             if string_name != tickerSymbol:
                 st.markdown(
@@ -474,13 +471,12 @@ if option == '*Bollinger Bands Squeeze':
             url='https://stock-screener.org/pullback-stock-screener.aspx')
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
-        tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
         if tickerSymbol == 'Summary of Stocks':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
             footer()
         else:
             range = st.sidebar.selectbox("Date Range", (
-                '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
             if string_name != tickerSymbol:
                 st.markdown(
@@ -524,7 +520,6 @@ if option == 'Search':
         if submit_button or session_state.checkboxed:
             session_state.checkboxed = True
 
-            tickerData = yf.Ticker(tickerSymbol)
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
