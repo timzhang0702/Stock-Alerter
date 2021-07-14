@@ -397,7 +397,7 @@ if option == '*Increased Volume':
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
-            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            string_name, string_summary, fig, config = chart(range, tickerSymbol)
             if string_name != tickerSymbol:
                 st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >", unsafe_allow_html=True)
                 st.write("---")
@@ -435,7 +435,7 @@ if option == '*Uptrend Pullback':
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
-            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            string_name, string_summary, fig, config = chart(range, tickerSymbol)
             if string_name != tickerSymbol:
                 st.markdown(
                     "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
@@ -477,7 +477,7 @@ if option == '*Bollinger Bands Squeeze':
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
-            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            string_name, string_summary, fig, config = chart(range, tickerSymbol)
             if string_name != tickerSymbol:
                 st.markdown(
                     "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
@@ -522,7 +522,7 @@ if option == 'Search':
 
             range = st.sidebar.selectbox("Date Range", (
                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            string_name, string_summary, fig, config = chart(range, tickerSymbol)
             if string_name != tickerSymbol:
                 st.markdown(
                     "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
