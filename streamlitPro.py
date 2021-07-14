@@ -355,7 +355,7 @@ st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
 option = st.sidebar.selectbox('Dashboard',
-                              ('Home', 'Search', '*Increased Volume', '*Uptrend Pullback', '*Bollinger Bands Squeeze'),
+                              ('Home', 'Search', 'Increased Volume', 'Uptrend Pullback', 'Bollinger Bands Squeeze'),
                               0)
 
 if option == 'Home':
@@ -392,7 +392,6 @@ if option == '*Increased Volume':
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
         if tickerSymbol == 'Summary of Stocks':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
-            footer()
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
@@ -432,7 +431,6 @@ if option == '*Uptrend Pullback':
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
         if tickerSymbol == 'Summary of Stocks':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
-            footer()
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
@@ -473,7 +471,6 @@ if option == '*Bollinger Bands Squeeze':
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
         if tickerSymbol == 'Summary of Stocks':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
-            footer()
         else:
             range = st.sidebar.selectbox("Date Range", (
                 '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
@@ -505,7 +502,7 @@ if option == '*Bollinger Bands Squeeze':
         st.info('Page In Development')
 
 if option == 'Search':
-#     try:
+    try:
         search()
         session_state = SessionState.get(checkboxed=False)
         with st.form(key='my_form1'):
@@ -547,8 +544,8 @@ if option == 'Search':
                 st.info('Ticker Symbol Not Found')
         
         footer()
-#     except:
-#         st.info('Page In Development')
+    except:
+        st.info('Page In Development')
 
 
 
