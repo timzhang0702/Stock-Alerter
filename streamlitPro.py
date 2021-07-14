@@ -29,19 +29,16 @@ auth.set_access_token(TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET)
 api = tweepy.API(auth)
 
 periodDict = {
-    "5 Days": 5,
     "1 Month": 30,
     "3 Months": 90,
     "6 Months": 120,
     "1 Year": 365,
 }
 intervalDict = {
-    "5 Days": "1d",
     "1 Month": "1d",
     "3 Months": "1d",
     "6 Months": "1d",
     "1 Year": "1wk",
-    "Max": "1mo",
 }
 
 
@@ -106,11 +103,9 @@ def footer():
 
 @st.cache(suppress_st_warning=True)
 def chart(range, tickerSymbol):
-    if periodDict[range] == "Max":
-        tickerDf = si.get_data(tickerSymbol, interval=intervalDict[range])
-    else:
-        tickerDf = si.get_data(tickerSymbol, start_date=datetime.now() - timedelta(days=periodDict[range]),
-                                  end_date=datetime.now(), interval=intervalDict[range])
+    
+    tickerDf = si.get_data(tickerSymbol, start_date=datetime.now() - timedelta(days=periodDict[range]),
+                              end_date=datetime.now(), interval=intervalDict[range])
 
     r = requests.get(
         f'https://www.alphavantage.co/query?function=OVERVIEW&symbol={tickerSymbol}&apikey=Y4NCX1DFBJCN4I82')
@@ -394,7 +389,7 @@ if option == '*Increased Volume':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
         else:
             range = st.sidebar.selectbox("Date Range", (
-                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
+                '1 Month', '3 Months', '6 Months', '1 Year'), 1)
             try:
                 string_name, string_summary, fig, config = chart(range, tickerSymbol)
                 st.markdown(
@@ -433,7 +428,7 @@ if option == '*Uptrend Pullback':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
         else:
             range = st.sidebar.selectbox("Date Range", (
-                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
+                '1 Month', '3 Months', '6 Months', '1 Year'), 1)
             try:
                 string_name, string_summary, fig, config = chart(range, tickerSymbol)
                 st.markdown(
@@ -473,7 +468,7 @@ if option == '*Bollinger Bands Squeeze':
             table(Symbol, Open, High, Low, Close, Volume, pctchange)
         else:
             range = st.sidebar.selectbox("Date Range", (
-                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
+                '1 Month', '3 Months', '6 Months', '1 Year'), 1)
             try:
                 string_name, string_summary, fig, config = chart(range, tickerSymbol)
                 st.markdown(
@@ -517,7 +512,7 @@ if option == 'Search':
             session_state.checkboxed = True
 
             range = st.sidebar.selectbox("Date Range", (
-                '5 Days', '1 Month', '3 Months', '6 Months', '1 Year', 'Max'), 2)
+                '1 Month', '3 Months', '6 Months', '1 Year'), 1)
             
             try:
                 string_name, string_summary, fig, config = chart(range, tickerSymbol)
