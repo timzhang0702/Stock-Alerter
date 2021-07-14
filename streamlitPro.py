@@ -210,7 +210,7 @@ def table(Symbol, Open, High, Low, Close, Volume, pctchange):
                                   fill_color='#FD8E72', align='left'),
                       cells=dict(values=[Symbol[1:], Open, High, Low, Close, Volume, pctchange],
                                  fill_color='#E5ECF6', align='left')))
-    fig.update_layout(height=(len(Open)) * 21 + 25, margin=dict(l=1, r=1, b=0, t=0))
+    fig.update_layout(height=(len(Open)) * 21 + 15, margin=dict(l=1, r=1, b=0, t=0))
     st.write(fig)
     st.write("---")
 
@@ -387,10 +387,8 @@ if option == 'Home':
         st.info('Page In Development')
 
 if option == '*Increased Volume':
-#     try:
+    try:
         increased_volume()
-        email()
-        footer()
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(url = 'https://stock-screener.org/pullback-stock-screener.aspx')
 
         tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
@@ -417,52 +415,54 @@ if option == '*Increased Volume':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
+                email()
                 footer()
             else:
                 st.info('Ticker Symbol Not Found')
+                email()
                 footer()
-#     except:
-#         st.info('Page In Development')
+    except:
+        st.info('Page In Development')
 
 if option == '*Uptrend Pullback':
     try:
         uptrend_pullback()
-        st.info('Page In Development')
-        email()
-        footer()
+        Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
+            url='https://stock-screener.org/pullback-stock-screener.aspx')
 
-    #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(upNasdaq, upNyse, SPREADSHEET_ID2)
+        tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
+        tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
+        if tickerSymbol == 'Summary of Stocks':
+            table(Symbol, Open, High, Low, Close, Volume, pctchange)
+            footer()
+        else:
+            range = st.sidebar.selectbox("Date Range", (
+                '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            if string_name != tickerSymbol:
+                st.markdown(
+                    "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                    unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
+                st.plotly_chart(fig, config=config)
 
-    #         tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
-    #         tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
 
-    #         if tickerSymbol == 'Summary of Stocks':
-    #             table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
-    #             footer()
-    #         else:
-    #             range = st.sidebar.selectbox("Date Range", (
-    #                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-    #             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
-    #             if string_name != tickerSymbol:
-    #                 st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
-    #                             unsafe_allow_html=True)
-    #                 st.write("---")
-    #                 st.info(string_summary)
-    #                 st.write("---")
-    #                 st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
-    #                             unsafe_allow_html=True)
-    #                 st.write("---")
-    #                 st.plotly_chart(fig, config=config)
-
-    #                 agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-    #                 if agree:
-    #                     taWrite()
-    #                     fig, config = ta(tickerSymbol)
-    #                     st.plotly_chart(fig, config=config)
-    #                 footer()
-    #             else:
-    #                 st.info('Ticker Symbol Not Found')
-    #                 footer()
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
+                email()
+                footer()
+            else:
+                st.info('Ticker Symbol Not Found')
+                email()
+                footer()
 
     except:
         st.info('Page In Development')
@@ -470,42 +470,42 @@ if option == '*Uptrend Pullback':
 if option == '*Bollinger Bands Squeeze':
     try:
         bbs()
-        st.info('Page In Development')
-        email()
-        footer()
+        Symbol, Open, High, Low, Close, Volume, pctchange = sheets(
+            url='https://stock-screener.org/pullback-stock-screener.aspx')
 
-    #         rows, sector, companyName, volume, rows2, sector2, companyName2, volume2 = sheets(bbsNasdaq, bbsNyse, SPREADSHEET_ID3)
+        tickerSymbol = st.sidebar.selectbox('Stock Ticker', Symbol)  # Select ticker symbol
+        tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
+        if tickerSymbol == 'Summary of Stocks':
+            table(Symbol, Open, High, Low, Close, Volume, pctchange)
+            footer()
+        else:
+            range = st.sidebar.selectbox("Date Range", (
+                '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
+            string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
+            if string_name != tickerSymbol:
+                st.markdown(
+                    "<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
+                    unsafe_allow_html=True)
+                st.write("---")
+                st.info(string_summary)
+                st.write("---")
+                st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
+                            unsafe_allow_html=True)
+                st.write("---")
+                st.plotly_chart(fig, config=config)
 
-    #         tickerSymbol = st.sidebar.selectbox('Stock Ticker',  rows + rows2)  # Select ticker symbol
-    #         tickerData = yf.Ticker(tickerSymbol)  # Get ticker data
+                agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
 
-    #         if tickerSymbol == 'Summary of Stocks':
-    #             table(rows, companyName, sector, volume, rows2, companyName2, sector2, volume2)
-    #             footer()
-    #         else:
-    #             range = st.sidebar.selectbox("Date Range", (
-    #                 '1 Day', '5 Days', '1 Month', '3 Months', '6 Months', 'YTD', '1 Year', '5 Years', 'Max'), 3)
-    #             string_name, string_summary, fig, config = chart(tickerData, range, tickerSymbol)
-    #             if string_name != tickerSymbol:
-    #                 st.markdown("<h2 style='text-align: center; color: black; font-weight:100;'><b>Business Summary</b></h2 >",
-    #                             unsafe_allow_html=True)
-    #                 st.write("---")
-    #                 st.info(string_summary)
-    #                 st.write("---")
-    #                 st.markdown("<h2 style='text-align: center; color: black;'><b>Interactive Stock Chart</b></h2 >",
-    #                             unsafe_allow_html=True)
-    #                 st.write("---")
-    #                 st.plotly_chart(fig, config=config)
-
-    #                 agree = st.sidebar.checkbox("Show Twitter Sentiment Analysis")
-    #                 if agree:
-    #                     taWrite()
-    #                     fig, config = ta(tickerSymbol)
-    #                     st.plotly_chart(fig, config=config)
-    #                 footer()
-    #             else:
-    #                 st.info('Ticker Symbol Not Found')
-    #                 footer()
+                if agree:
+                    taWrite()
+                    fig, config = ta(tickerSymbol)
+                    st.plotly_chart(fig, config=config)
+                email()
+                footer()
+            else:
+                st.info('Ticker Symbol Not Found')
+                email()
+                footer()
     except:
         st.info('Page In Development')
 
@@ -554,7 +554,6 @@ if option == 'Search':
     except:
         st.info('Page In Development')
 
-st.markdown("""<script>window.scrollTo(0,0);</script>""", unsafe_allow_html=True)
 
 
 
