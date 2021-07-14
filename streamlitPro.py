@@ -541,10 +541,11 @@ if option == 'Search':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
+                email()
 
             except:
                 st.info('Ticker Symbol Not Found')
-        email()
+        
         footer()
 #     except:
 #         st.info('Page In Development')
