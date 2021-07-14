@@ -387,9 +387,8 @@ if option == 'Home':
         st.info('Page In Development')
 
 if option == '*Increased Volume':
-    try:
+#     try:
         increased_volume()
-        st.info('Page In Development')
         email()
         footer()
         Symbol, Open, High, Low, Close, Volume, pctchange = sheets(url = 'https://stock-screener.org/pullback-stock-screener.aspx')
@@ -422,8 +421,8 @@ if option == '*Increased Volume':
             else:
                 st.info('Ticker Symbol Not Found')
                 footer()
-    except:
-        st.info('Page In Development')
+#     except:
+#         st.info('Page In Development')
 
 if option == '*Uptrend Pullback':
     try:
