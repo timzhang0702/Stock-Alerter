@@ -120,7 +120,7 @@ def chart(range, tickerSymbol):
     except:
         string_summary = "Currently Unavailable"
 
-    qf = cf.QuantFig(tickerDf, name='Price', title='Stock Chart', height=700)
+    qf = cf.QuantFig(tickerDf, name='Price', title='Stock Chart')
     qf.add_sma(10, width=2, color='green', name='SMA')
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='BBands')
     qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue')
@@ -131,7 +131,7 @@ def chart(range, tickerSymbol):
     config = {'displaylogo': False,
               "modeBarButtonsToRemove": ['pan2d', 'zoom2d', 'select2d', 'lasso2d', 'toggleSpikelines', 'autoScale2d']}
     fig = qf.iplot(asFigure=True, layout=layout)
-    fig.update_layout(height=1500, title_text=string_name, title_x=0.5, showlegend=True,
+    fig.update_layout(height=500, title_text=string_name, title_x=0.5, showlegend=True,
                       legend=dict(orientation="h", yanchor="top", y=1.02, xanchor="center", x=0.5))
     return string_name, string_summary, fig, config
 
