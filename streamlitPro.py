@@ -131,7 +131,7 @@ def chart(range, tickerSymbol):
     config = {'displaylogo': False,
               "modeBarButtonsToRemove": ['pan2d', 'zoom2d', 'select2d', 'lasso2d', 'toggleSpikelines', 'autoScale2d']}
     fig = qf.iplot(asFigure=True, layout=layout)
-    fig.update_layout(height=[300, 200, 150, 150], title_text=string_name, title_x=0.5, showlegend=True,
+    fig.update_layout(height=800, title_text=string_name, title_x=0.5, showlegend=True,
                       legend=dict(orientation="h", yanchor="top", y=1.02, xanchor="center", x=0.5))
     return string_name, string_summary, fig, config
 
