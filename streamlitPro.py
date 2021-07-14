@@ -132,7 +132,7 @@ def chart(range, tickerSymbol):
               "modeBarButtonsToRemove": ['pan2d', 'zoom2d', 'select2d', 'lasso2d', 'toggleSpikelines', 'autoScale2d']}
     fig = qf.iplot(asFigure=True, layout=layout)
     fig.update_layout(height=1200, title_text=string_name, title_x=0.5, showlegend=True,
-                      legend=dict(orientation="h", yanchor="top", y=1.02, xanchor="center", x=0.5))
+                      legend=dict(orientation="h", yanchor="top", y=1.02, xanchor="center", x=0.5),margin=dict(l=0,r=0,b=0,t=0))
     return string_name, string_summary, fig, config
 
 
