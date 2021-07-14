@@ -125,13 +125,13 @@ def chart(range, tickerSymbol):
     qf.add_bollinger_bands(periods=20, boll_std=2, colors=['magenta', 'magenta'], fill=True, name='BBands')
     qf.add_volume(title='Volume', up_color='grey', down_color='lightsteelblue')
     qf.add_rsi(periods=14, color='midnightblue', name='RSI', showbands=False)
-    qf.add_macd(legendgroup=True, name='MACD', colors=['red', 'black'], height=100)
+    qf.add_macd(legendgroup=True, name='MACD', colors=['red', 'black'])
     layout = dict(
         xaxis=dict(rangeslider=dict(visible=False), categoryorder="category ascending", type="category", visible=False))
     config = {'displaylogo': False,
               "modeBarButtonsToRemove": ['pan2d', 'zoom2d', 'select2d', 'lasso2d', 'toggleSpikelines', 'autoScale2d']}
     fig = qf.iplot(asFigure=True, layout=layout)
-    fig.update_layout(height=1000, title_text=string_name, title_x=0.5, showlegend=True,
+    fig.update_layout(height=[300, 200, 150, 150], title_text=string_name, title_x=0.5, showlegend=True,
                       legend=dict(orientation="h", yanchor="top", y=1.02, xanchor="center", x=0.5))
     return string_name, string_summary, fig, config
 
