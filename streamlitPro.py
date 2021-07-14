@@ -143,7 +143,8 @@ def increased_volume():
         ---
         Looking at volume over time can help get a sense of the strength or conviction behind advances and declines in specific stocks.
         This screener looks for stocks with a sharp increase in volume, which can indicate new interest in a stock and signal an uptrend. 
-        #### Below is the overview of stocks found with this screener. For a specific stock's analytics, select the corresponding ticker symbol from the sidebar.
+        Below is the overview of stocks found with this screener.
+        #### For a specific stock's analytics, select the corresponding ticker symbol from the sidebar.
         """
     )
     st.write('---')
