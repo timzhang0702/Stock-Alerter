@@ -95,7 +95,7 @@ def layout(*args):
 
 def footer():
     myargs = [
-        "Copyright © 2021 ",
+        "Developed by ",
         link("mailto:timzhang0702@gmail.com", "Tim Zhang"),
     ]
     layout(*myargs)
