@@ -303,7 +303,7 @@ def taWrite():
 
 
 def sendmail(mes):
-    sender_email = "emailsendtimzhang.com"
+    sender_email = "emailsendtimzhang@gmail.com"
     rec_email = "timzhang0702@gmail.com"
     password = "Emailsend123"
 
