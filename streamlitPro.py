@@ -303,9 +303,9 @@ def taWrite():
 
 
 def sendmail(mes):
-    sender_email = "timzhangx01@gmail.com"
+    sender_email = "emailsendtimzhang.com"
     rec_email = "timzhang0702@gmail.com"
-    password = "wagp54cb"
+    password = "Emailsend123"
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
     server.starttls()
