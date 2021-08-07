@@ -376,7 +376,7 @@ if option == 'Home':
             ---
             """
         )
-
+        email()
         footer()
     except:
         st.info('Page In Development')
