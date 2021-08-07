@@ -377,7 +377,7 @@ if option == 'Home':
             """
         )
         email()
-        footer()
+
     except:
         pass
 
@@ -414,7 +414,7 @@ if option == 'Increased Volume':
 
             except:
                 st.info('Ticker Symbol Not Found')
-        footer()
+
     except:
         st.info('Page In Development')
 
@@ -452,8 +452,6 @@ if option == 'Oversold Stocks':
 
             except:
                 st.info('Ticker Symbol Not Found')
-
-        footer()
 
     except:
         st.info('Page In Development')
@@ -493,7 +491,6 @@ if option == 'Bollinger Bands':
             except:
                 st.info('Ticker Symbol Not Found')
 
-        footer()
     except:
         st.info('Page In Development')
         
@@ -531,7 +528,7 @@ if option == 'MACD Crossover':
 
             except:
                 st.info('Ticker Symbol Not Found')
-        footer()
+
     except:
         st.info('Page In Development')
 
@@ -577,7 +574,7 @@ if option == 'Search':
             except:
                 st.info('Ticker Symbol Not Found')
         
-        footer()
+
     except:
         st.info('Page In Development')
 
@@ -606,7 +603,7 @@ text-align: center;
 }
 </style>
 <div class="footer">
-<p>Developed with ❤ by <a style='display: block; text-align: center;' href="https://www.heflin.dev/" target="_blank">Heflin Stephen Raj S</a></p>
+<p>Developed by <a style='display: block; text-align: center;' href="https://www.heflin.dev/" target="_blank">Tim Zhang</a></p>
 </div>
 """
 st.markdown(footer,unsafe_allow_html=True)
