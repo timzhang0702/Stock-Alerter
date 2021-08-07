@@ -581,7 +581,7 @@ if option == 'Search':
     except:
         st.info('Page In Development')
 
-
+footer()
 
 
 
