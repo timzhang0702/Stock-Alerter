@@ -414,7 +414,7 @@ if option == 'Increased Volume':
 
             except:
                 st.info('Ticker Symbol Not Found')
-            footer()
+        footer()
 
     except:
         st.info('Page In Development')
@@ -453,7 +453,7 @@ if option == 'Oversold Stocks':
 
             except:
                 st.info('Ticker Symbol Not Found')
-            footer()
+        footer()
     except:
         st.info('Page In Development')
 
@@ -491,7 +491,7 @@ if option == 'Bollinger Bands':
 
             except:
                 st.info('Ticker Symbol Not Found')
-            footer()
+        footer()
     except:
         st.info('Page In Development')
         
@@ -529,7 +529,7 @@ if option == 'MACD Crossover':
 
             except:
                 st.info('Ticker Symbol Not Found')
-            footer()
+        footer()
     except:
         st.info('Page In Development')
 
