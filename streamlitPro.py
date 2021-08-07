@@ -379,7 +379,7 @@ if option == 'Home':
         email()
         footer()
     except:
-        
+        pass
 
 if option == 'Increased Volume':
     try:
