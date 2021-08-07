@@ -377,8 +377,6 @@ if option == 'Home':
             """
         )
 
-        email()
-
         footer()
     except:
         st.info('Page In Development')
@@ -416,7 +414,6 @@ if option == 'Increased Volume':
 
             except:
                 st.info('Ticker Symbol Not Found')
-        email()
         footer()
     except:
         st.info('Page In Development')
@@ -455,7 +452,7 @@ if option == 'Oversold Stocks':
 
             except:
                 st.info('Ticker Symbol Not Found')
-        email()
+
         footer()
 
     except:
@@ -495,7 +492,7 @@ if option == 'Bollinger Bands':
 
             except:
                 st.info('Ticker Symbol Not Found')
-        email()
+
         footer()
     except:
         st.info('Page In Development')
@@ -534,7 +531,6 @@ if option == 'MACD Crossover':
 
             except:
                 st.info('Ticker Symbol Not Found')
-        email()
         footer()
     except:
         st.info('Page In Development')
@@ -576,7 +572,7 @@ if option == 'Search':
                     taWrite()
                     fig, config = ta(tickerSymbol)
                     st.plotly_chart(fig, config=config)
-                email()
+
 
             except:
                 st.info('Ticker Symbol Not Found')
