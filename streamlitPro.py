@@ -575,7 +575,7 @@ if option == 'Search':
             except:
                 st.info('Ticker Symbol Not Found')
         
-            footer()
+        footer()
     except:
         st.info('Page In Development')
 
