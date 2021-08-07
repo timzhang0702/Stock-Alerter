@@ -358,36 +358,6 @@ option = st.sidebar.selectbox('Dashboard',
                               ('Home', 'Search', 'Increased Volume', 'Oversold Stocks', 'Bollinger Bands', 'MACD Crossover'),
                               0)
 
-footer="""<style>
-a:link , a:visited{
-color: blue;
-background-color: transparent;
-text-decoration: underline;
-}
-
-a:hover,  a:active {
-color: red;
-background-color: transparent;
-text-decoration: underline;
-}
-
-.footer {
-position: fixed;
-left: 0;
-bottom: 0;
-width: 100%;
-background-color: white;
-color: black;
-text-align: center;
-}
-</style>
-<div class="footer">
-<p>Developed by <a style='display: block; text-align: center;' href="https://www.heflin.dev/" target="_blank">Tim Zhang</a></p>
-</div>
-"""
-
-
-
 if option == 'Home':
     try:
         st.markdown("<h1 style='text-align: center; color: black; font-weight:100;'><b>Home</b></h1 >",
@@ -407,7 +377,7 @@ if option == 'Home':
             """
         )
         email()
-        st.markdown(footer,unsafe_allow_html=True)
+        footer()
     except:
         pass
 
@@ -444,6 +414,7 @@ if option == 'Increased Volume':
 
             except:
                 st.info('Ticker Symbol Not Found')
+            footer()
 
     except:
         st.info('Page In Development')
@@ -482,7 +453,7 @@ if option == 'Oversold Stocks':
 
             except:
                 st.info('Ticker Symbol Not Found')
-
+            footer()
     except:
         st.info('Page In Development')
 
@@ -520,7 +491,7 @@ if option == 'Bollinger Bands':
 
             except:
                 st.info('Ticker Symbol Not Found')
-
+            footer()
     except:
         st.info('Page In Development')
         
@@ -558,7 +529,7 @@ if option == 'MACD Crossover':
 
             except:
                 st.info('Ticker Symbol Not Found')
-
+            footer()
     except:
         st.info('Page In Development')
 
@@ -604,7 +575,7 @@ if option == 'Search':
             except:
                 st.info('Ticker Symbol Not Found')
         
-
+            footer()
     except:
         st.info('Page In Development')
 
