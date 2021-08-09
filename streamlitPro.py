@@ -338,7 +338,7 @@ def email():
         regex = '^(\w|\.|\_|\-)+[@](\w|\_|\-|\.)+[.]\w{2,3}$'
 
         with col1:
-            text_input = st.text_input('Subscribe today to get the latest news and updates.', 'Email Address')
+            text_input = st.text_input('Subscribe to get the latest news and updates.', 'Email Address')
         with col2:
             st.header('')
             submit_button = st.form_submit_button(label="Subscribe")
