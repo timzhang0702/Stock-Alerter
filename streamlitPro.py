@@ -355,7 +355,7 @@ st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
 option = st.sidebar.selectbox('Dashboard',
-                              ('Home', 'Search',
+                              ('Home', 'Search'),
                               0)
 
 if option == 'Home':
