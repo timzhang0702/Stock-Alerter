@@ -355,7 +355,7 @@ st.sidebar.write('#')
 st.sidebar.header('Filters')
 st.sidebar.write('####')
 option = st.sidebar.selectbox('Dashboard',
-                              ('Home', 'Search', 'Increased Volume', 'Oversold Stocks', 'Bollinger Bands', 'MACD Crossover'),
+                              ('Home', 'Search',
                               0)
 
 if option == 'Home':
@@ -371,8 +371,7 @@ if option == 'Home':
             - Interactive stock charts
             - Popular indicators (Bollinger Bands, RSI, SMA, MACD)
             - Twitter sentiment for individual stocks
-            - Stock Pattern Screeners (Increased Volume, Oversold Stocks, Bollinger Bands, MACD Crossover)
-            - Select a screener from the dashboard filters to learn more! 
+            - Select search from the dashboard filter to learn more! 
             ---
             """
         )
